@@ -1,20 +1,17 @@
 // Array Lists
 package DataStructures
 
-import "errors"
+import "github.com/JhyeonLee/DataStructuresAndAlgorithms/golang/utils"
 
 type ArrayList struct {
-	Elements []int
+	elements []int
 	front    int
 	last     int
 }
 
-var invalidRankException = errors.New("invalid Rank Exception")
-var emptyListException = errors.New("empty List Exception")
-
 // var fullListException = errors.New("full List Exception")
 
-func initialize() *ArrayList {
+func Initialize_ArrayList() *ArrayList {
 	list := &ArrayList{
 		front: 0,
 		last:  0,
@@ -23,55 +20,55 @@ func initialize() *ArrayList {
 }
 
 // 리스트의 크기, 즉 원소 수 반환
-func (l *ArrayList) size() int {
+func (l *ArrayList) Size() int {
 	return l.last
 }
 
 // 리스트가 비어 있는지 여부를 반환
-func (l *ArrayList) isEmpty() bool {
-	return l.size() == 0
+func (l *ArrayList) IsEmpty() bool {
+	return l.Size() == 0
 }
 
 // 원소 전체를 반환
-func (l *ArrayList) elements() []int {
-	return l.Elements
+func (l *ArrayList) Elements() []int {
+	return l.elements
 }
 
 // 순위 r에 저장된 원소를 반환
-func (l *ArrayList) get(r int) (int, error) {
-	if r < 0 {
-		return -1, invalidRankException
+func (l *ArrayList) Get(r int) (int, error) {
+	if r < 0 || l.Size() < r {
+		return -1, utils.InvalidRankException()
 	}
-	return l.Elements[r], nil
+	return l.elements[r], nil
 }
 
 // 순위 r에 저장된 원소를 e로 대체
-func (l *ArrayList) set(r, e int) (int, error) {
-	if r < 0 {
-		return -1, invalidRankException
+func (l *ArrayList) Set(r, e int) (int, error) {
+	if r < 0 || l.Size() < r {
+		return -1, utils.InvalidRankException()
 	}
-	l.Elements[r] = e
+	l.elements[r] = e
 	return e, nil
 }
 
 // 순위 r 앞에 원소 e를 삽입
-func (l *ArrayList) add(r, e int) error {
-	if r < 0 {
-		return invalidRankException
+func (l *ArrayList) Add(r, e int) error {
+	if r < 0 || l.Size() < r {
+		return utils.InvalidRankException()
 	}
-	l.Elements = append(append(l.Elements[:r], e), l.Elements[r:]...)
+	l.elements = append(append(l.elements[:r], e), l.elements[r:]...)
 	return nil
 }
 
 // 순위 r에 저장된 원소를 삭제하여 반환
-func (l *ArrayList) remove(r int) (int, error) {
-	if l.size() == 0 {
-		return -1, emptyListException
+func (l *ArrayList) Remove(r int) (int, error) {
+	if l.Size() == 0 {
+		return -1, utils.EmptyListException()
 	}
 	if r < 0 {
-		return -1, invalidRankException
+		return -1, utils.InvalidRankException()
 	}
-	e := l.Elements[r]
-	l.Elements = append(l.Elements[:r], l.Elements[r+1:]...)
+	e := l.elements[r]
+	l.elements = append(l.elements[:r], l.elements[r+1:]...)
 	return e, nil
 }

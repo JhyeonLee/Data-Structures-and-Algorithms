@@ -3,11 +3,13 @@
 // 2. ./[컴파일 후 만들어진 파일명] ~> c/sample
 
 #include <stdio.h>
-// #include "headerSample.h"
+#include <stdlib.h>
+#include "../utils/utils.h"
 
 
 
 int main(){
+
 
     return 0;
 }

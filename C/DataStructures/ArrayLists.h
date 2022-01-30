@@ -5,6 +5,7 @@
 // #define __ARRAYLISTS_H_
 #include <stdio.h>
 #include<stdlib.h>
+#include "../utils/utils.h"
 
 typedef struct ArrayList { // 원형 배열
     int* elements; // 원소들
@@ -32,12 +33,12 @@ ArrayList* initialize(int n){
 }
 
 // 리스트의 크기, 즉 원소 수 반환
-int size(ArrayList* list){
+int ArrayList_size(ArrayList* list){
     return (list->acceptableSize - list->front + list->last + 1) % list->acceptableSize;
 }
 // 리스트가 비어 있는지 여부를 반환
-int isEmpty(ArrayList* list){
-    if (size(list) == 0){
+int ArrayList_isEmpty(ArrayList* list){
+    if (ArrayList_size(list) == 0){
         return 1; // 리스트는 비어 있다
     }
     else {
@@ -45,18 +46,18 @@ int isEmpty(ArrayList* list){
     }
 }
 // 원소 전체를 반환
-int* elements(ArrayList* list){
+int* ArrayList_elements(ArrayList* list){
     return list->elements;
 }
 // 순위 r에 저장된 원소를 반환
-int get(ArrayList* list, int r){
+int ArrayList_get(ArrayList* list, int r){
     if (r < 0 || r > list->acceptableSize) {
         return invalidRankException();
     }
     return list->elements[(list->front + r) % list->acceptableSize];
 }
 // 순위 r에 저장된 원소를 e로 대체
-int set(ArrayList* list, int r, int e) {
+int ArrayList_set(ArrayList* list, int r, int e) {
     if (r < 0 || r > list->acceptableSize) {
         return invalidRankException();
     }
@@ -64,12 +65,12 @@ int set(ArrayList* list, int r, int e) {
     return e;
 }
 // 순위 r 앞에 원소 e를 삽입
-int add(ArrayList* list, int r, int e) {
-    int n = size(list);
+int ArrayList_add(ArrayList* list, int r, int e) {
+    int n = ArrayList_size(list);
     if (n == list->acceptableSize) {
         return fullListException();
     }
-    if (r < 0 || r > list->acceptableSize) {
+    if (r < 0 || r > n) {
         return invalidRankException();
     }
     if (r < n/2) {
@@ -87,8 +88,8 @@ int add(ArrayList* list, int r, int e) {
     }
 }
 // 순위 r에 저장된 원소를 삭제하여 반환
-int remove(ArrayList* list, int r) {
-    int n = size(list);
+int ArrayList_remove(ArrayList* list, int r) {
+    int n = ArrayList_size(list);
     if (n == 0) {
         return emptyListException();
     }
@@ -109,23 +110,5 @@ int remove(ArrayList* list, int r) {
     }
     return e;
 }
-// 부당한 순위에 대한 접근으로 인해 처리 불가능한 상황
-int invalidRankException() {
-    printf("invalid Rank Exception\n");
-    return -1;
-}
-// 리스트가 만훤이라 처리 불가능한 상황
-int fullListException() {
-    printf("full List Exception\n");
-    return -1;
-}
-//리스트가 비어 있어 처리 불가은한 상황
-int emptyListException() {
-    printf("empty List Exception");
-    return -1;
-}
-int notEnoughMemory() {
-    printf("Not Enough Memory");
-    return -1;
-}
+
 // #endif
