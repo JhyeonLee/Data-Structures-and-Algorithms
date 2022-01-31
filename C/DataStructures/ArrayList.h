@@ -1,8 +1,8 @@
 // Array Lists
 
 #pragma once
-// #ifdef __ARRAYLISTS_H_
-// #define __ARRAYLISTS_H_
+// #ifdef __ARRAYLIST_H__
+// #define __ARRAYLIST_H__
 #include<stdlib.h>
 #include "../utils/utils.h"
 
@@ -20,7 +20,7 @@ ArrayList* ArrayList_initialize(int n){
         notEnoughMemory();
         return NULL;
     }
-    newList->elements = (int*)malloc(sizeof(n));
+    newList->elements = (int*)malloc(n*sizeof(int));
     if (newList->elements == NULL) {
         notEnoughMemory();
         return NULL;

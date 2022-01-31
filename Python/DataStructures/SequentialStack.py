@@ -21,10 +21,10 @@ class Sequentialstack():
         # fullStackException
 
         self.top += 1
-        self.elements[self.top] = e
+        self.elements.append(e)
     
     def pop(self):
         if self.isEmpty():
             return emptyStackException
         self.top -= 1
-        return self.elements[self.top + 1]
+        return self.elements.pop(self.top + 1)

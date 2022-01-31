@@ -1,7 +1,8 @@
 #pragma once
-// #ifdef __ARRAYLISTS_H_
-// #define __ARRAYLISTS_H_
+// #ifdef __DOUBLYLINKEDLIST_H__
+// #define __DOUBLYLINKEDLIST_H__
 #include <stdio.h>
+#include <stdlib.h>
 #include "../utils/utils.h"
 #include "./DoublyLinkedNode.h"
 
@@ -12,14 +13,18 @@ typedef struct DoublyLinkedList {
     DoublyLinkedNode* trailer;
 } DoublyLinkedList;
 
-DoublyLinkedList DoublyLinkedList_initialize(){
-    DoublyLinkedList newlist;
-    newlist.headNode = NULL;
-    newlist.tailNode = NULL;
-    newlist.header = DoublyLinkedNode_getnode();
-    newlist.trailer = DoublyLinkedNode_getnode();
-    newlist.header->nextlink = newlist.trailer;
-    newlist.trailer->previouslink = newlist.header;
+DoublyLinkedList* DoublyLinkedList_initialize(){
+    DoublyLinkedList* newlist = (DoublyLinkedList*)malloc(sizeof(DoublyLinkedList));
+    if (newlist == NULL) {
+        notEnoughMemory();
+        return NULL;
+    }
+    newlist->headNode = NULL;
+    newlist->tailNode = NULL;
+    newlist->header = DoublyLinkedNode_getnode();
+    newlist->trailer = DoublyLinkedNode_getnode();
+    (newlist->header)->nextlink = newlist->trailer;
+    (newlist->trailer)->previouslink = newlist->header;
     return newlist;
 }
 

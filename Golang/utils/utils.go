@@ -24,3 +24,11 @@ func EmptyListException() error {
 func EmptyStackException() error {
 	return errors.New("empty Stack Exception")
 }
+
+func EmptyQueueException() error {
+	return errors.New("empty Queue Exception")
+}
+
+func EmptyDequeException() error {
+	return errors.New("empty Deque Exception")
+}

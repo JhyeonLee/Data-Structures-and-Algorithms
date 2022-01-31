@@ -14,14 +14,14 @@ type ArrayList struct {
 func Initialize_ArrayList() *ArrayList {
 	list := &ArrayList{
 		front: 0,
-		last:  0,
+		last:  -1,
 	}
 	return list
 }
 
 // 리스트의 크기, 즉 원소 수 반환
 func (l *ArrayList) Size() int {
-	return l.last
+	return l.last + 1
 }
 
 // 리스트가 비어 있는지 여부를 반환
@@ -56,6 +56,7 @@ func (l *ArrayList) Add(r, e int) error {
 	if r < 0 || l.Size() < r {
 		return utils.InvalidRankException()
 	}
+	l.last++
 	l.elements = append(append(l.elements[:r], e), l.elements[r:]...)
 	return nil
 }
@@ -69,6 +70,7 @@ func (l *ArrayList) Remove(r int) (int, error) {
 		return -1, utils.InvalidRankException()
 	}
 	e := l.elements[r]
+	l.last--
 	l.elements = append(l.elements[:r], l.elements[r+1:]...)
 	return e, nil
 }

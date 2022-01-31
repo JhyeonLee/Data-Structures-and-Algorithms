@@ -6,7 +6,9 @@
 #include <stdlib.h>
 #include "../utils/utils.h"
 // #include "./DataStructures/DoublyLinkedList.h"
-#include "./SinglyLinkedNode.h"
+// #include "./DoublyLinkedNode.h"
+#include "./DoublyLinkedNode.h"
+
 
 
 int main(){

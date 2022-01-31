@@ -1,6 +1,6 @@
 #pragma once
-// #ifdef __ARRAYLISTS_H_
-// #define __ARRAYLISTS_H_
+// #ifdef __DOUBLYLINKENODE_H__
+// #define __DOUBLYLINKENODE_H__
 #include<stdlib.h>
 #include "../utils/utils.h"
 

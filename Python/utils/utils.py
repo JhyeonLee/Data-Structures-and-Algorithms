@@ -10,4 +10,10 @@ class emptyListException(Exception):
 
 class emptyStackException(Exception):
     def __init__(self):
-        super().__init__("empty Stack Exception")        
+        super().__init__("empty Stack Exception")
+class emptyQueueException(Exception):
+    def __init__(self):
+        super().__init__("empty Queue Exception")
+class emptyDequeException(Exception):
+    def __init__(self):
+        super().__init__("empty Deque Exception")

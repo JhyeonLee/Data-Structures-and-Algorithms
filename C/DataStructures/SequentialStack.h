@@ -1,6 +1,6 @@
 #pragma once
-// #ifdef __ARRAYLISTS_H_
-// #define __ARRAYLISTS_H_
+// #ifdef __SEQUENTIALSTACK_H__
+// #define __SEQUENTIALSTACK_H__
 #include<stdlib.h>
 #include "../utils/utils.h"
 
@@ -16,7 +16,7 @@ SequentialStack* SequentialStack_initialize(int n){
         notEnoughMemory();
         return NULL;
     }
-    newstack->elements = (int*)malloc(sizeof(n));
+    newstack->elements = (int*)malloc(n*sizeof(int));
     if (newstack->elements == NULL) {
         notEnoughMemory();
         return NULL;

@@ -1,43 +1,51 @@
 #pragma once
-// #ifdef __ARRAYLISTS_H_
-// #define __ARRAYLISTS_H_
+// #ifdef __DOUBLYLINKEDSET_H__
+// #define __DOUBLYLINKEDSET_H__
 #include "../utils/utils.h"
 #include "./DoublyLinkedList.h"
 
 // 합집합(파괴적, 비재귀적)
-DoublyLinkedList DoublyLinkedList_union(DoublyLinkedList* A, DoublyLinkedList* B) {
-    DoublyLinkedList C = DoublyLinkedList_initialize();
+DoublyLinkedList* DoublyLinkedList_union(DoublyLinkedList* A, DoublyLinkedList* B) {
+    DoublyLinkedList* C = DoublyLinkedList_initialize();
+    if (C == NULL) {
+        notEnoughMemory();
+        return NULL;
+    }
     while(!DoublyLinkedList_isEmpty(A) && !DoublyLinkedList_isEmpty(B)) {
         int a = DoublyLinkedList_get(A, 1);
         int b = DoublyLinkedList_get(B, 1);
         if (a < b) {
-            DoublyLinkedList_addLast(&C, a);
+            DoublyLinkedList_addLast(C, a);
             DoublyLinkedList_removeFirst(A);
         } else if (a > b) {
-            DoublyLinkedList_addLast(&C, b);
+            DoublyLinkedList_addLast(C, b);
             DoublyLinkedList_removeFirst(B);
         } else { // a == b
-            DoublyLinkedList_addLast(&C, a);
+            DoublyLinkedList_addLast(C, a);
             DoublyLinkedList_removeFirst(A);
             DoublyLinkedList_removeFirst(B);
         }
     }
     while (!DoublyLinkedList_isEmpty(A)) {
         int a = DoublyLinkedList_get(A, 1);
-        DoublyLinkedList_addLast(&C, a);
+        DoublyLinkedList_addLast(C, a);
         DoublyLinkedList_removeFirst(A);
     }
     while (!DoublyLinkedList_isEmpty(B)) {
         int b = DoublyLinkedList_get(B, 1);
-        DoublyLinkedList_addLast(&C, b);
+        DoublyLinkedList_addLast(C, b);
         DoublyLinkedList_removeFirst(B);
     }
     return C;
 }
 
 // 교집합(파괴적, 비재귀적))
-DoublyLinkedList DoublyLinkedList_intersect(DoublyLinkedList* A, DoublyLinkedList* B) {
-    DoublyLinkedList C = DoublyLinkedList_initialize();
+DoublyLinkedList* DoublyLinkedList_intersect(DoublyLinkedList* A, DoublyLinkedList* B) {
+    DoublyLinkedList* C = DoublyLinkedList_initialize();
+    if (C == NULL) {
+        notEnoughMemory();
+        return NULL;
+    }
     while(!DoublyLinkedList_isEmpty(A) && !DoublyLinkedList_isEmpty(B)) {
         int a = DoublyLinkedList_get(A, 1);
         int b = DoublyLinkedList_get(B, 1);
@@ -46,7 +54,7 @@ DoublyLinkedList DoublyLinkedList_intersect(DoublyLinkedList* A, DoublyLinkedLis
         } else if (a > b) {
             DoublyLinkedList_removeFirst(B);
         } else { // a == b
-            DoublyLinkedList_addLast(&C, a);
+            DoublyLinkedList_addLast(C, a);
             DoublyLinkedList_removeFirst(A);
             DoublyLinkedList_removeFirst(B);
         }
@@ -61,13 +69,13 @@ DoublyLinkedList DoublyLinkedList_intersect(DoublyLinkedList* A, DoublyLinkedLis
 }
 
 //차집합(A - B)
-DoublyLinkedList DoublyLinkedList_subtract(DoublyLinkedList* A, DoublyLinkedList* B) {
-    DoublyLinkedList C = DoublyLinkedList_initialize();
+DoublyLinkedList* DoublyLinkedList_subtract(DoublyLinkedList* A, DoublyLinkedList* B) {
+    DoublyLinkedList* C = DoublyLinkedList_initialize();
     while(!DoublyLinkedList_isEmpty(A) && !DoublyLinkedList_isEmpty(B)) {
         int a = DoublyLinkedList_get(A, 1);
         int b = DoublyLinkedList_get(B, 1);
         if (a < b) {
-            DoublyLinkedList_addLast(&C, a);
+            DoublyLinkedList_addLast(C, a);
             DoublyLinkedList_removeFirst(A);
         } else if (a > b) {
             DoublyLinkedList_removeFirst(B);
@@ -78,7 +86,7 @@ DoublyLinkedList DoublyLinkedList_subtract(DoublyLinkedList* A, DoublyLinkedList
     }
     while (!DoublyLinkedList_isEmpty(A)) {
         int a = DoublyLinkedList_get(A, 1);
-        DoublyLinkedList_addLast(&C, a);
+        DoublyLinkedList_addLast(C, a);
         DoublyLinkedList_removeFirst(A);
     }
     while (!DoublyLinkedList_isEmpty(B)) {

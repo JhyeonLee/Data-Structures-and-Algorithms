@@ -1,42 +1,50 @@
 #pragma once
-// #ifdef __ARRAYLISTS_H_
-// #define __ARRAYLISTS_H_
+// #ifdef __SINGLYLINKEDSET_H__
+// #define __SINGLYLINKEDSET_H__
 #include "./SinglyLinkedList.h"
 
 // 합집합(파괴적, 비재귀적)
-SinglyLinkedList SinglyLinkedList_union(SinglyLinkedList* A, SinglyLinkedList* B) {
-    SinglyLinkedList C = SinglyLinkedList_initialize();
+SinglyLinkedList* SinglyLinkedList_union(SinglyLinkedList* A, SinglyLinkedList* B) {
+    SinglyLinkedList* C = SinglyLinkedList_initialize();
+    if (C == NULL) {
+        notEnoughMemory();
+        return NULL;
+    }
     while(!SinglyLinkedList_isEmpty(A) && !SinglyLinkedList_isEmpty(B)) {
         int a = SinglyLinkedList_get(A, 1);
         int b = SinglyLinkedList_get(B, 1);
         if (a < b) {
-            SinglyLinkedList_addLast(&C, a);
+            SinglyLinkedList_addLast(C, a);
             SinglyLinkedList_removeFirst(A);
         } else if (a > b) {
-            SinglyLinkedList_addLast(&C, b);
+            SinglyLinkedList_addLast(C, b);
             SinglyLinkedList_removeFirst(B);
         } else { // a == b
-            SinglyLinkedList_addLast(&C, a);
+            SinglyLinkedList_addLast(C, a);
             SinglyLinkedList_removeFirst(A);
             SinglyLinkedList_removeFirst(B);
         }
     }
     while (!SinglyLinkedList_isEmpty(A)) {
         int a = SinglyLinkedList_get(A, 1);
-        SinglyLinkedList_addLast(&C, a);
+        SinglyLinkedList_addLast(C, a);
         SinglyLinkedList_removeFirst(A);
     }
     while (!SinglyLinkedList_isEmpty(B)) {
         int b = SinglyLinkedList_get(B, 1);
-        SinglyLinkedList_addLast(&C, b);
+        SinglyLinkedList_addLast(C, b);
         SinglyLinkedList_removeFirst(B);
     }
     return C;
 }
 
 // 교집합(파괴적, 비재귀적))
-SinglyLinkedList SinglyLinkedList_intersect(SinglyLinkedList* A, SinglyLinkedList* B) {
-    SinglyLinkedList C = SinglyLinkedList_initialize();
+SinglyLinkedList* SinglyLinkedList_intersect(SinglyLinkedList* A, SinglyLinkedList* B) {
+    SinglyLinkedList* C = SinglyLinkedList_initialize();
+    if (C == NULL) {
+        notEnoughMemory();
+        return NULL;
+    }
     while(!SinglyLinkedList_isEmpty(A) && !SinglyLinkedList_isEmpty(B)) {
         int a = SinglyLinkedList_get(A, 1);
         int b = SinglyLinkedList_get(B, 1);
@@ -45,7 +53,7 @@ SinglyLinkedList SinglyLinkedList_intersect(SinglyLinkedList* A, SinglyLinkedLis
         } else if (a > b) {
             SinglyLinkedList_removeFirst(B);
         } else { // a == b
-            SinglyLinkedList_addLast(&C, a);
+            SinglyLinkedList_addLast(C, a);
             SinglyLinkedList_removeFirst(A);
             SinglyLinkedList_removeFirst(B);
         }
@@ -60,13 +68,17 @@ SinglyLinkedList SinglyLinkedList_intersect(SinglyLinkedList* A, SinglyLinkedLis
 }
 
 //차집합(A - B)
-SinglyLinkedList SinglyLinkedList_subtract(SinglyLinkedList* A, SinglyLinkedList* B) {
-    SinglyLinkedList C = SinglyLinkedList_initialize();
+SinglyLinkedList* SinglyLinkedList_subtract(SinglyLinkedList* A, SinglyLinkedList* B) {
+    SinglyLinkedList* C = SinglyLinkedList_initialize();
+    if (C == NULL) {
+        notEnoughMemory();
+        return NULL;
+    }
     while(!SinglyLinkedList_isEmpty(A) && !SinglyLinkedList_isEmpty(B)) {
         int a = SinglyLinkedList_get(A, 1);
         int b = SinglyLinkedList_get(B, 1);
         if (a < b) {
-            SinglyLinkedList_addLast(&C, a);
+            SinglyLinkedList_addLast(C, a);
             SinglyLinkedList_removeFirst(A);
         } else if (a > b) {
             SinglyLinkedList_removeFirst(B);
@@ -77,7 +89,7 @@ SinglyLinkedList SinglyLinkedList_subtract(SinglyLinkedList* A, SinglyLinkedList
     }
     while (!SinglyLinkedList_isEmpty(A)) {
         int a = SinglyLinkedList_get(A, 1);
-        SinglyLinkedList_addLast(&C, a);
+        SinglyLinkedList_addLast(C, a);
         SinglyLinkedList_removeFirst(A);
     }
     while (!SinglyLinkedList_isEmpty(B)) {

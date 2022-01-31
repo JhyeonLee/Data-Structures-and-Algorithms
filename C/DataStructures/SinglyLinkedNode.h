@@ -1,6 +1,6 @@
 #pragma once
-// #ifdef __ARRAYLISTS_H_
-// #define __ARRAYLISTS_H_
+// #ifdef __SINGLYLINKEDNODE_H__
+// #define __SINGLYLINKEDNODE_H__
 #include<stdlib.h>
 #include "../utils/utils.h"
 

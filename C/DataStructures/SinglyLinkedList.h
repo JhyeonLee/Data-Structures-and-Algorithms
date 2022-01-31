@@ -1,7 +1,8 @@
 #pragma once
-// #ifdef __ARRAYLISTS_H_
-// #define __ARRAYLISTS_H_
+// #ifdef __SINGLYLINKEDLIST_H__
+// #define __SINGLYLINKEDLIST_H__
 #include <stdio.h>
+#include <stdlib.h>
 #include "../utils/utils.h"
 #include "./SinglyLinkedNode.h"
 
@@ -12,13 +13,17 @@ typedef struct SinglyLinkedList {
     SinglyLinkedNode* trailer;
 } SinglyLinkedList;
 
-SinglyLinkedList SinglyLinkedList_initialize() {
-    SinglyLinkedList newlist;
-    newlist.headNode = NULL;
-    newlist.tailNode = NULL;
-    newlist.header = SinglyLinkedNode_getnode();
-    newlist.trailer = SinglyLinkedNode_getnode();
-    newlist.header->link = newlist.trailer;
+SinglyLinkedList* SinglyLinkedList_initialize() {
+    SinglyLinkedList* newlist = (SinglyLinkedList*)malloc(sizeof(SinglyLinkedList));
+    if (newlist == NULL) {
+        notEnoughMemory();
+        return NULL;
+    }
+    newlist->headNode = NULL;
+    newlist->tailNode = NULL;
+    newlist->header = SinglyLinkedNode_getnode();
+    newlist->trailer = SinglyLinkedNode_getnode();
+    (newlist->header)->link = newlist->trailer;
     return newlist;
 }
 
