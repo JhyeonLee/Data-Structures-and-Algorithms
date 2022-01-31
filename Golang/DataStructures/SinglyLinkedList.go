@@ -85,7 +85,7 @@ func (p *SinglyLinkedNode) AddNodeNext(e int) {
 
 // 순위 r에 원소가 e인 노드 삽입
 func (l *SinglyLinkedList) Add(r, e int) error {
-	if r < 0 || l.Size() < r {
+	if r < 0 || l.Size()+1 < r {
 		return utils.InvalidRankException()
 	}
 	p := l.Header
@@ -94,6 +94,16 @@ func (l *SinglyLinkedList) Add(r, e int) error {
 	}
 	p.AddNodeNext(e)
 	return nil
+}
+
+// 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삽입
+func (l *SinglyLinkedList) AddFirst(e int) error {
+	return l.Add(1, e)
+}
+
+// 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
+func (l *SinglyLinkedList) AddLast(e int) error {
+	return l.Add(l.Size()+1, e)
 }
 
 // 노드 p 삭제
@@ -118,13 +128,23 @@ func (l *SinglyLinkedList) Remove(r int) (int, error) {
 	return e, nil
 }
 
+// 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삭제
+func (l *SinglyLinkedList) RemoveFirst() (int, error) {
+	return l.Remove(1)
+}
+
+// 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삭제
+func (l *SinglyLinkedList) RemoveLast() (int, error) {
+	return l.Remove(l.Size())
+}
+
 // 헤더와 트레일러 이외 모든 원소 삭제
 func (l *SinglyLinkedList) RemoveAll() error {
 	if l.IsEmpty() {
 		return utils.EmptyListException()
 	}
 	for i := l.Size(); i > 0; i-- {
-		l.Header.RemoveNode()
+		l.RemoveFirst()
 	}
 	return nil
 }

@@ -1,5 +1,5 @@
 class SinglyLinkedNode():
-    def __init__(self):
-        self.element = 0
+    def __init__(self, data=0):
+        self.element = data
         self.link = None
         

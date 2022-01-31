@@ -37,7 +37,7 @@ int DoublyLinkedList_size(DoublyLinkedList* list){
 }
 
 // 리스트가 비어 있는지 여부를 반환
-int isEmpty(DoublyLinkedList* list) {
+int DoublyLinkedList_isEmpty(DoublyLinkedList* list) {
     return DoublyLinkedList_size(list) == 0;
 }
 
@@ -86,7 +86,7 @@ void DoublyLinkedList_addNodeBefore(DoublyLinkedNode* p, int e){
 
 // 순위 r에 원소가 e인 노드 삽입
 void DoublyLinkedList_add(DoublyLinkedList* list, int r, int e) {
-    if (r < 1 || DoublyLinkedList_size(list) < r) {
+    if (r < 1 || DoublyLinkedList_size(list)+1 < r) {
         invalidRankException();
         return;
     }
@@ -96,6 +96,16 @@ void DoublyLinkedList_add(DoublyLinkedList* list, int r, int e) {
     }
     DoublyLinkedList_addNodeBefore(p, e);
     // size += 1;
+}
+
+// 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삽입
+void DoublyLinkedList_addFirst(DoublyLinkedList* list, int e) {
+    DoublyLinkedList_add(list, 1, e);
+}
+
+// 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
+void DoublyLinkedList_addLast(DoublyLinkedList* list, int e) {
+    DoublyLinkedList_add(list, DoublyLinkedList_size(list)+1, e);
 }
 
 // 노드 p 삭제
@@ -121,9 +131,19 @@ int DoublyLinkedList_remove(DoublyLinkedList* list, int r){
     return e;
 }
 
+// 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삭제
+void DoublyLinkedList_removeFirst(DoublyLinkedList* list) {
+    DoublyLinkedList_remove(list, 1);
+}
+
+// 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삭제
+void DoublyLinkedList_removeLast(DoublyLinkedList* list) {
+    DoublyLinkedList_remove(list, DoublyLinkedList_size(list));
+}
+
 // 헤더와 트레일러 이외 모든 원소 삭제
 void DoublyLinkedList_removeAll(DoublyLinkedList* list){
-    if (isEmpty(list)) {
+    if (DoublyLinkedList_isEmpty(list)) {
         emptyListException();
         return;
     }

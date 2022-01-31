@@ -99,6 +99,16 @@ func (l *DoublyLinkedList) Add(r, e int) error {
 	return nil
 }
 
+// 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삽입
+func (l *DoublyLinkedList) AddFirst(e int) error {
+	return l.Add(1, e)
+}
+
+// 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
+func (l *DoublyLinkedList) AddLast(e int) error {
+	return l.Add(l.Size()+1, e)
+}
+
 // 노드 p 삭제
 func (p *DoublyLinkedNode) RemoveNode() int {
 	e := p.Element
@@ -121,13 +131,23 @@ func (l *DoublyLinkedList) Remove(r int) (int, error) {
 	return e, nil
 }
 
+// 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삭제
+func (l *DoublyLinkedList) RemoveFirst() (int, error) {
+	return l.Remove(1)
+}
+
+// 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삭제
+func (l *DoublyLinkedList) RemoveLast() (int, error) {
+	return l.Remove(l.Size())
+}
+
 // 헤더와 트레일러 이외 모든 원소 삭제
 func (l *DoublyLinkedList) RemoveAll() error {
 	if l.IsEmpty() {
 		return utils.EmptyListException()
 	}
 	for i := l.Size(); i > 0; i-- {
-		l.Header.RemoveNode()
+		l.RemoveFirst()
 	}
 	return nil
 }
