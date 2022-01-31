@@ -1,9 +1,6 @@
 #pragma once
 // #ifdef __ARRAYLISTS_H_
 // #define __ARRAYLISTS_H_
-
-#include <stdio.h>
-#include <stdlib.h>
 #include "./SinglyLinkedList.h"
 
 // 합집합(파괴적, 비재귀적)

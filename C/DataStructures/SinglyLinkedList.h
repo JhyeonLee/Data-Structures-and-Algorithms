@@ -2,7 +2,6 @@
 // #ifdef __ARRAYLISTS_H_
 // #define __ARRAYLISTS_H_
 #include <stdio.h>
-#include<stdlib.h>
 #include "../utils/utils.h"
 #include "./SinglyLinkedNode.h"
 

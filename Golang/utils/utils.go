@@ -20,3 +20,7 @@ func InvalidRankException() error {
 func EmptyListException() error {
 	return errors.New("empty List Exception")
 }
+
+func EmptyStackException() error {
+	return errors.New("empty Stack Exception")
+}

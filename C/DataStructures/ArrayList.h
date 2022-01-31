@@ -3,7 +3,6 @@
 #pragma once
 // #ifdef __ARRAYLISTS_H_
 // #define __ARRAYLISTS_H_
-#include <stdio.h>
 #include<stdlib.h>
 #include "../utils/utils.h"
 
@@ -15,12 +14,12 @@ typedef struct ArrayList { // 원형 배열
 } ArrayList;
 
 // 크기가 n인 배열 리스트 초기화
-ArrayList* initialize(int n){
+ArrayList* ArrayList_initialize(int n){
     ArrayList* newList = (ArrayList*)malloc(sizeof(ArrayList));
     if (newList == NULL){
         notEnoughMemory();
         return NULL;
-    }    
+    }
     newList->elements = (int*)malloc(sizeof(n));
     if (newList->elements == NULL) {
         notEnoughMemory();

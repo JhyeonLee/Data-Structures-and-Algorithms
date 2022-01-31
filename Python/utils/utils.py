@@ -7,3 +7,7 @@ class invalidRankException(Exception):
 class emptyListException(Exception):
     def __init__(self):
         super().__init__("empty List Exception")
+
+class emptyStackException(Exception):
+    def __init__(self):
+        super().__init__("empty Stack Exception")        
