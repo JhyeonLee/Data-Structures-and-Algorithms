@@ -64,13 +64,15 @@ int ArrayList_set(ArrayList* list, int r, int e) {
     return e;
 }
 // 순위 r 앞에 원소 e를 삽입
-int ArrayList_add(ArrayList* list, int r, int e) {
+void ArrayList_add(ArrayList* list, int r, int e) {
     int n = ArrayList_size(list);
     if (n == list->acceptableSize) {
-        return fullListException();
+        fullListException();
+        return;
     }
     if (r < 0 || r > n) {
-        return invalidRankException();
+        invalidRankException();
+        return;
     }
     if (r < n/2) {
         for(int i = list->front; i <= (list->front + r - 1) % list->acceptableSize; i++) {
@@ -85,6 +87,10 @@ int ArrayList_add(ArrayList* list, int r, int e) {
         list->elements[(list->front + r) % list->acceptableSize] = e;
         list->last = (list->last + 1) % list->acceptableSize;
     }
+}
+// 가장 뒤에 워소 e를 삽입
+void ArrayList_addLast(ArrayList* list, int e) {
+    ArrayList_add(list, ArrayList_size(list)+1,e);
 }
 // 순위 r에 저장된 원소를 삭제하여 반환
 int ArrayList_remove(ArrayList* list, int r) {
@@ -108,6 +114,17 @@ int ArrayList_remove(ArrayList* list, int r) {
         list->last = (list->last - 1) % list->acceptableSize;
     }
     return e;
+}
+
+// 가장 앞에 있는 원소 삭제하여 반환
+int ArrayList_removeFirst(ArrayList* list) {
+    return ArrayList_remove(list, 0);
+}
+
+void ArrayList_swap(ArrayList* list, int A, int B) {
+    int e = list->elements[A];
+    list->elements[A] =list->elements[B];
+    list->elements[B] = e;
 }
 
 // #endif

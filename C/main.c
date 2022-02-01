@@ -9,6 +9,10 @@
 // #include "./DoublyLinkedNode.h"
 #include "./DoublyLinkedNode.h"
 
+#include "./ArrayList.h"
+#include "./SequentialQueue.h"
+#include "./LinkedQueue.h"
+
 
 
 int main(){
