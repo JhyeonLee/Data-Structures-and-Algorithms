@@ -1,5 +1,3 @@
-// Array Lists
-
 #pragma once
 // #ifdef __ARRAYLIST_H__
 // #define __ARRAYLIST_H__

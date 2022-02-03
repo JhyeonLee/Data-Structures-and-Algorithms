@@ -18,7 +18,7 @@ languages: C, Cpp, Python, Golang
 1. Priority Queue Sort
 2. Selection Sort
 3. Insertion Sort
-4. Heap Sort: max-heap vs. min-heap, bottom-up vs. top-down, recursive vs. non-recursive
+4. Heap Sort
 5. Divide and Conquer
 6. Merge Sort
 7. Quick Sort
