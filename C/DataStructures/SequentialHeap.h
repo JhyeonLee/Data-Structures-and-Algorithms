@@ -70,7 +70,7 @@ void SequentialHeap_upHeap_MinHeap(SequentialHeap* H, int i) {
     if(SequentialHeap_isRoot(i)) {
         return;
     }
-    if (H->keys[i] <= H->keys[SequentialHeap_parent(i)]) { // Max Heap
+    if (H->keys[i] <= H->keys[SequentialHeap_parent(i)]) {
         return;
     }
     SequentialHeap_swap(H, i, SequentialHeap_parent(i));
@@ -101,13 +101,14 @@ void SequentialHeap_insertItem_MinHeap(SequentialHeap* H, int k, int e) {
     SequentialHeap_upHeap_MaxHeap(H, H->n);
 }
 
-int SequentialHeap_removeMix_MinHeap(SequentialHeap* H) {
+int SequentialHeap_removeMin_MinHeap(SequentialHeap* H) {
     int k = H->keys[1];
     int e = H->elements[1];
     H->keys[1] = H->keys[H->n];
     H->elements[1] = H->elements[H->n];
     H->n--;
     SequentialHeap_downHeap_MinHeap(H, 1);
+    return e;
 }
 
 void SequentialHeap_upHeap_MaxHeap(SequentialHeap* H, int i) {
@@ -162,7 +163,7 @@ void SequentialHeap_rBuildHeap_MinHeap(SequentialHeap* H, int i) {
     if (i > H->n) {
         return;
     }
-    SequentialHeap_rBuildHeap_MinHeap(H, SequentialHeap_leftChild(i*2));
+    SequentialHeap_rBuildHeap_MinHeap(H, SequentialHeap_leftChild(i));
     SequentialHeap_rBuildHeap_MinHeap(H, SequentialHeap_rightChild(i));
     SequentialHeap_downHeap_MinHeap(H, i);
 }
@@ -180,7 +181,7 @@ void SequentialHeap_rBuildHeap_MaxHeap(SequentialHeap* H, int i) {
     if (i > H->n) {
         return;
     }
-    SequentialHeap_rBuildHeap_MaxHeap(H, SequentialHeap_leftChild(i*2));
+    SequentialHeap_rBuildHeap_MaxHeap(H, SequentialHeap_leftChild(i));
     SequentialHeap_rBuildHeap_MaxHeap(H, SequentialHeap_rightChild(i));
     SequentialHeap_downHeap_MaxHeap(H, i);
 }

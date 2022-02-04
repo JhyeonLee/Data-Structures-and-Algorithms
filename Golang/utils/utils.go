@@ -5,6 +5,15 @@ import (
 	"log"
 )
 
+func FindIndex(A []int, k int) int {
+	for index, value := range A {
+		if value == k {
+			return index
+		}
+	}
+	return -1
+}
+
 var logFn = log.Panic
 
 func HandleErr(err error) {
@@ -31,4 +40,8 @@ func EmptyQueueException() error {
 
 func EmptyDequeException() error {
 	return errors.New("empty Deque Exception")
+}
+
+func IsNotElement() error {
+	return errors.New("It is not Element in the Array")
 }
