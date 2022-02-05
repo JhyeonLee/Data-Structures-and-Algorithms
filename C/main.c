@@ -5,15 +5,4 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../utils/utils.h"
-// #include "./DataStructures/DoublyLinkedList.h"
-// #include "./DoublyLinkedNode.h"
-#include "./DoublyLinkedNode.h"
 
-#include "./ArrayList.h"
-#include "./SequentialQueue.h"
-#include "./LinkedQueue.h"
-
-
-int main(){
-    return 0;
-}

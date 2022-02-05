@@ -5,6 +5,13 @@ import (
 	"log"
 )
 
+func Even(a int) bool {
+	return a%2 == 0
+}
+func Odd(a int) bool {
+	return a%2 != 0
+}
+
 func FindIndex(A []int, k int) int {
 	for index, value := range A {
 		if value == k {
@@ -44,4 +51,8 @@ func EmptyDequeException() error {
 
 func IsNotElement() error {
 	return errors.New("It is not Element in the Array")
+}
+
+func InvalidNodeException() error {
+	return errors.New("invalid Node Exception")
 }

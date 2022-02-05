@@ -3,6 +3,13 @@
 // #define __ARRAYLISTS_H_
 #include<stdio.h>
 
+int even(int a) {
+    return a % 2 == 0;
+}
+int odd(int a) {
+    return a % 2 != 0;
+}
+
 int notEnoughMemory() {
     printf("not Enough Memory\n");
     return -1;
@@ -47,6 +54,11 @@ int fullDequeException() {
 }
 int emptyDequeException() {
     printf("empty Queue Exception\n");
+    return -1;
+}
+
+int invalidNodeException() {
+    printf("invalid Node Exception\n");
     return -1;
 }
 // #endif

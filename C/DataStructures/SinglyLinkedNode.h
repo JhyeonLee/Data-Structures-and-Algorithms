@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 // #ifdef __SINGLYLINKEDNODE_H__
 // #define __SINGLYLINKEDNODE_H__
 #include<stdlib.h>

@@ -18,12 +18,12 @@ SequentialHeap* SequentialHeap_initialize(int N, int type) {
         notEnoughMemory();
         return NULL;
     }
-    newHeap->keys = (int*)malloc(N*sizeof(int));
+    newHeap->keys = (int*)malloc((N+1)*sizeof(int));
     if (newHeap->keys == NULL) {
         notEnoughMemory();
         return NULL;
     }
-    newHeap->elements = (int*)malloc(N*sizeof(int));
+    newHeap->elements = (int*)malloc((N+1)*sizeof(int));
     if (newHeap->elements == NULL) {
         notEnoughMemory();
         return NULL;
