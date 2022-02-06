@@ -24,7 +24,7 @@ LinkedHeap* inPlaceLinkedHeapSort_Insertion(int orderType) {
         } else if (orderType == 2) {
             LinkedHeap_insertItem_maxHeap(H, key, element);
         } else {
-            return;
+            return NULL;
         }
         N++;
     }
@@ -47,7 +47,7 @@ LinkedHeap* inPlaceLinkedHeapSort_Insertion(int orderType) {
             lastNode = LinkedHeap_retreatLastNode(H, lastNode);
         }
     } else {
-        return;
+        return NULL;
     }
     return H;
 }
@@ -69,6 +69,7 @@ LinkedHeap* inPlaceLinkedHeapSort_BottomUp_Recursive(int orderType) {
             break;
         }
         SinglyLinkedList_addLast(list, key, element);
+        N++;
     }
     LinkedHeap* H;
     if (orderType == 1) {
@@ -76,8 +77,9 @@ LinkedHeap* inPlaceLinkedHeapSort_BottomUp_Recursive(int orderType) {
     } else if (orderType == 2) {
         H = LinkedHeap_RecursiveBuildHeap_maxHeap(list, orderType);
     } else {
-        return;
+        return NULL;
     }
+    H->n = N;
 
     // Phase 2
     if (orderType == 1) {
@@ -96,7 +98,7 @@ LinkedHeap* inPlaceLinkedHeapSort_BottomUp_Recursive(int orderType) {
             lastNode = LinkedHeap_retreatLastNode(H, lastNode);
         }
     } else {
-        return;
+        return NULL;
     }
     return H;
 }

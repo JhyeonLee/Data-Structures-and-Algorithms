@@ -11,7 +11,7 @@ type SequentialHeap struct {
 }
 
 // order Type: Ascending(min Heap), Descending(max Heap)
-func InplaceHeapSort_Insertion(orderType string) *DataStructures.SequentialHeap {
+func InplaceSequentialHeapSort_Insertion(orderType string) *DataStructures.SequentialHeap {
 	var N int
 	fmt.Println("How Many keys(or elements) do you want?")
 	fmt.Scan(&N)
@@ -53,7 +53,7 @@ func InplaceHeapSort_Insertion(orderType string) *DataStructures.SequentialHeap 
 }
 
 // Bottom Up
-func InplaceHeapSort_BottomUp_Recursive(orderType string) *DataStructures.SequentialHeap {
+func InplaceSequentialHeapSort_BottomUp_Recursive(orderType string) *DataStructures.SequentialHeap {
 	var N int
 	fmt.Println("How Many keys(or elements) do you want?")
 	fmt.Scan(&N)
@@ -97,7 +97,7 @@ func InplaceHeapSort_BottomUp_Recursive(orderType string) *DataStructures.Sequen
 	return heap
 }
 
-func InplaceHeapSort_BottomUp_nonRecursive(orderType string) *DataStructures.SequentialHeap {
+func InplaceSequentialHeapSort_BottomUp_nonRecursive(orderType string) *DataStructures.SequentialHeap {
 	var N int
 	fmt.Println("How Many keys(or elements) do you want?")
 	fmt.Scan(&N)

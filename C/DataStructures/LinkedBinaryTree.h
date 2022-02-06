@@ -122,19 +122,19 @@ int LinkedBinaryTree_binaryInOrder(LinkedBinaryTreeNode* node) {
     return count;
 }
 void LinkedBinaryTree_levelOrder(LinkedBinaryTreeNode* node) {
-    LinkedQueue* Q = LinkedQueue_initialize();
+    LinkedQueue_biT* Q = LinkedQueue_biT_initialize();
     if (Q == NULL) {
         return;
     }
-    LinkedQueue_enqueue(Q, node);
-    while(!LinkedQueue_isEmpty(Q)) {
-        node = LinkedQueue_dequeue(Q);
+    LinkedQueue_biT_enqueue(Q, node);
+    while(!LinkedQueue_biT_isEmpty(Q)) {
+        node = LinkedQueue_biT_dequeue(Q);
         // visit(v);
         if (LinkedBinaryTree_isInternal(node->leftChild)) {
-            LinkedQueue_enqueue(Q, node->leftChild);
+            LinkedQueue_biT_enqueue(Q, node->leftChild);
         }
         if (LinkedBinaryTree_isInternal(node->rightChild)) {
-            LinkedQueue_enqueue(Q, node->rightChild);
+            LinkedQueue_biT_enqueue(Q, node->rightChild);
         }
     }
 }
@@ -208,25 +208,44 @@ LinkedBinaryTree* ListConvert2CompleteBinaryTree(SinglyLinkedList* list, int typ
         return NULL;
     }
     
-    LinkedQueue* Q = LinkedQueue_initialize();
+    LinkedQueue_biT* Q = LinkedQueue_biT_initialize();
     if (Q == NULL) {
         return;
     }
     LinkedBinaryTreeNode* node = tree->root;
-    LinkedQueue_enqueue(Q, node);
+    LinkedQueue_biT_enqueue(Q, node);
     while(!SinglyLinkedList_isEmpty(list)) {
-        node = LinkedQueue_dequeue(Q);
+        node = LinkedQueue_biT_dequeue(Q);
+        if (node == NULL) {
+            break;
+        }
         // visit(v);
-        node->leftChild = SinglyLinkedList_removeFirst(list);
-        if(node->leftChild == NULL) {
+        // Left Child
+        int e = SinglyLinkedList_removeFirst(list);
+        if (e == -1) {
             break;
         }
-        LinkedQueue_enqueue(Q, node->leftChild);
-        node->rightChild = SinglyLinkedList_removeFirst(list);
-        if(node->rightChild == NULL) {
+        LinkedBinaryTreeNode* newnode = LinkedBinaryTreeNode_getNode();
+        if (newnode == NULL) {
+            return NULL;
+        }
+        newnode->element = e;
+        node->leftChild = newnode;
+        newnode->parent = node;
+        LinkedQueue_biT_enqueue(Q, node->leftChild);
+        // Right Child
+        int e = SinglyLinkedList_removeFirst(list);
+        if (e == -1) {
             break;
         }
-        LinkedQueue_enqueue(Q, node->rightChild);
+        LinkedBinaryTreeNode* newnode = LinkedBinaryTreeNode_getNode();
+        if (newnode == NULL) {
+            return NULL;
+        }
+        newnode->element = e;
+        node->rightChild = newnode;
+        newnode->parent = node;
+        LinkedQueue_biT_enqueue(Q, node->rightChild);
     }
 
     return tree;

@@ -1,6 +1,7 @@
 package DataStructures
 
 type SinglyLinkedNode struct {
+	Key     int
 	Element int
 	link    *SinglyLinkedNode
 }

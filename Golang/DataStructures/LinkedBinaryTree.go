@@ -69,28 +69,34 @@ func (node *LinkedBinaryTreeNode) Height() int {
 		}
 	}
 }
-func PreOrder(node *LinkedBinaryTreeNode) {
+func PreOrder(node *LinkedBinaryTreeNode) int {
 	fmt.Println("key: ", node.Key, ", element: ", node.Element)
+	count := 0
 	if IsInternal(node) {
-		PreOrder(node.LeftChild)
-		PreOrder(node.RightChild)
+		count += PreOrder(node.LeftChild)
+		count += PreOrder(node.RightChild)
 	}
+	return count
 }
-func PostOrder(node *LinkedBinaryTreeNode) {
+func PostOrder(node *LinkedBinaryTreeNode) int {
+	count := 0
 	if IsInternal(node) {
-		PostOrder(node.LeftChild)
-		PostOrder(node.RightChild)
+		count += PostOrder(node.LeftChild)
+		count += PostOrder(node.RightChild)
 	}
 	fmt.Println("key: ", node.Key, ", element: ", node.Element)
+	return count
 }
-func InOrder(node *LinkedBinaryTreeNode) {
+func InOrder(node *LinkedBinaryTreeNode) int {
+	count := 0
 	if IsInternal(node) {
-		InOrder(node.LeftChild)
+		count += InOrder(node.LeftChild)
 	}
 	fmt.Println("key: ", node.Key, ", element: ", node.Element)
 	if IsInternal(node) {
-		InOrder(node.RightChild)
+		count += InOrder(node.RightChild)
 	}
+	return count
 }
 func EulerTour(node *LinkedBinaryTreeNode) {
 	fmt.Println("key: ", node.LeftChild.Key, ", element: ", node.LeftChild.Element)
@@ -160,4 +166,38 @@ func (node *LinkedBinaryTreeNode) PostOrderSucc() *LinkedBinaryTreeNode {
 		node = node.LeftChild
 	}
 	return node
+}
+
+func (list *SinglyLinkedList) ListConvert2CompleteBinaryTree(typeOfOrder string) *LinkedBinaryTree {
+	tree := Initialize_LinkedBinaryTree(typeOfOrder)
+	Q := Initialize_LinkedQueue_biT()
+	node := tree.Root
+	Q.Enqueue_biT(node)
+	for !list.IsEmpty() {
+		node, err := Q.Dequeue_biT()
+		if err != nil {
+			break
+		}
+		// Left Child
+		e, err := list.RemoveFirst()
+		if err != nil {
+			break
+		}
+		newnode := GetLinkedBinaryTreeNode()
+		newnode.Element = e
+		node.LeftChild = newnode
+		newnode.Parent = node
+		Q.Enqueue_biT(node.LeftChild)
+		// Right Child
+		e, err = list.RemoveFirst()
+		if err != nil {
+			break
+		}
+		newnode = GetLinkedBinaryTreeNode()
+		newnode.Element = e
+		node.RightChild = newnode
+		newnode.Parent = node
+		Q.Enqueue_biT(node.RightChild)
+	}
+	return tree
 }

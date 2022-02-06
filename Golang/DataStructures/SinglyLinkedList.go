@@ -55,7 +55,7 @@ func (l *SinglyLinkedList) Get(r int) (int, error) {
 }
 
 // 순위 r에 저장된 원소를 e로 대체
-func (l *SinglyLinkedList) Set(r, e int) (int, error) {
+func (l *SinglyLinkedList) Set(r, k, e int) (int, error) {
 	if r < 0 || l.Size() < r {
 		return -1, utils.InvalidRankException()
 	}
@@ -63,6 +63,7 @@ func (l *SinglyLinkedList) Set(r, e int) (int, error) {
 	for i := 0; i < r; i++ {
 		p = p.link
 	}
+	p.Key = k
 	p.Element = e
 	return e, nil
 }
@@ -76,15 +77,16 @@ func (l *SinglyLinkedList) Traverse() {
 }
 
 // 노드 p 뒤에 값이 e인 노드 삽입
-func (p *SinglyLinkedNode) AddNodeNext(e int) {
+func (p *SinglyLinkedNode) AddNodeNext(k, e int) {
 	q := GetSinglyLinkedNode()
+	q.Key = k
 	q.Element = e
 	q.link = p.link
 	p.link = q
 }
 
 // 순위 r에 원소가 e인 노드 삽입
-func (l *SinglyLinkedList) Add(r, e int) error {
+func (l *SinglyLinkedList) Add(r, k, e int) error {
 	if r < 0 || l.Size()+1 < r {
 		return utils.InvalidRankException()
 	}
@@ -92,18 +94,18 @@ func (l *SinglyLinkedList) Add(r, e int) error {
 	for i := 0; i < r-1; i++ {
 		p = p.link
 	}
-	p.AddNodeNext(e)
+	p.AddNodeNext(k, e)
 	return nil
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삽입
-func (l *SinglyLinkedList) AddFirst(e int) error {
-	return l.Add(1, e)
+func (l *SinglyLinkedList) AddFirst(k, e int) error {
+	return l.Add(1, k, e)
 }
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
-func (l *SinglyLinkedList) AddLast(e int) error {
-	return l.Add(l.Size()+1, e)
+func (l *SinglyLinkedList) AddLast(k, e int) error {
+	return l.Add(l.Size()+1, k, e)
 }
 
 // 노드 p 삭제

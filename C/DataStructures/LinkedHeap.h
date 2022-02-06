@@ -104,8 +104,9 @@ LinkedBinaryTreeNode* reduceExternal(LinkedHeap* H, LinkedBinaryTreeNode* z) {
     LinkedBinaryTreeNode_putNode(z_parent);
     return z_sibiling;
 }
+
 void LinkedHeap_binaryExpansion(SequentialStack* S, int n) {
-    while ( n >= 2) {
+    while (n >= 2) {
         // 왼쪽 이동(0), 오른쪽 이동(1)
         SequentialStack_push(S, n%2);
         n = n%2;
@@ -127,10 +128,6 @@ LinkedBinaryTreeNode* LinkedHeap_findLastNode(LinkedHeap* H) {
     }
     return node;
 }
-LinkedBinaryTreeNode* LinkedHeap_advanceLast(LinkedHeap* H) {
-    LinkedBinaryTreeNode* lastnode = LinkedHeap_findLastNode(H);
-    return LinkedHeap_advanceLastNode(H, lastnode);
-}
 LinkedBinaryTreeNode* LinkedHeap_advanceLastNode(LinkedHeap* H, LinkedBinaryTreeNode* lastnode) {
     while (lastnode != H->root && (lastnode->parent)->rightChild == lastnode)  {
         lastnode = lastnode->parent;
@@ -143,10 +140,11 @@ LinkedBinaryTreeNode* LinkedHeap_advanceLastNode(LinkedHeap* H, LinkedBinaryTree
     }
     return lastnode;
 }
-LinkedBinaryTreeNode* LinkedHeap_retreatLast(LinkedHeap* H) {
+LinkedBinaryTreeNode* LinkedHeap_advanceLast(LinkedHeap* H) {
     LinkedBinaryTreeNode* lastnode = LinkedHeap_findLastNode(H);
-    return LinkedHeap_retreatLastNode(H, lastnode);
+    return LinkedHeap_advanceLastNode(H, lastnode);
 }
+
 LinkedBinaryTreeNode* LinkedHeap_retreatLastNode(LinkedHeap* H,LinkedBinaryTreeNode* lastnode) {
     while (lastnode != H->root && (lastnode->parent)->leftChild == lastnode)  {
         lastnode = lastnode->parent;
@@ -158,6 +156,10 @@ LinkedBinaryTreeNode* LinkedHeap_retreatLastNode(LinkedHeap* H,LinkedBinaryTreeN
         lastnode = lastnode->rightChild;
     }
     return lastnode->parent;
+}
+LinkedBinaryTreeNode* LinkedHeap_retreatLast(LinkedHeap* H) {
+    LinkedBinaryTreeNode* lastnode = LinkedHeap_findLastNode(H);
+    return LinkedHeap_retreatLastNode(H, lastnode);
 }
 
 int LinkedHeap_depth(LinkedBinaryTreeNode* node) {
@@ -283,8 +285,8 @@ LinkedBinaryTreeNode* LinkedHeap_removeMax_maxHeap(LinkedHeap* H) {
 
 void LinkedHeap_expandExternalAll(LinkedBinaryTreeNode* node) {
     if(LinkedBinaryTree_isInternal(node)) {
-        LinkedBinaryTree_binaryPostOrder(node->leftChild);
-        LinkedBinaryTree_binaryPostOrder(node->rightChild);
+        LinkedHeap_expandExternalAll(node->leftChild);
+        LinkedHeap_expandExternalAll(node->rightChild);
     } else if (LinkedBinaryTree_isExternal(node)) {
         LinkedHeap_expandExternal(node);
     } else {

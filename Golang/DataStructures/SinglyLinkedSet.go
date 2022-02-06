@@ -17,13 +17,13 @@ func SinglyLinkedList_union(A, B *SinglyLinkedList) (*SinglyLinkedList, error) {
 			return nil, err
 		}
 		if a < b {
-			C.AddLast(a)
+			C.AddLast(a, a)
 			A.RemoveFirst()
 		} else if a > b {
-			C.AddLast(b)
+			C.AddLast(b, b)
 			B.RemoveFirst()
 		} else {
-			C.AddLast(a)
+			C.AddLast(a, a)
 			A.RemoveFirst()
 			B.RemoveFirst()
 		}
@@ -34,7 +34,7 @@ func SinglyLinkedList_union(A, B *SinglyLinkedList) (*SinglyLinkedList, error) {
 			utils.HandleErr(err)
 			return nil, err
 		}
-		C.AddLast(a)
+		C.AddLast(a, a)
 		A.RemoveFirst()
 	}
 	for !B.IsEmpty() {
@@ -43,7 +43,7 @@ func SinglyLinkedList_union(A, B *SinglyLinkedList) (*SinglyLinkedList, error) {
 			utils.HandleErr(err)
 			return nil, err
 		}
-		C.AddLast(b)
+		C.AddLast(b, b)
 		B.RemoveFirst()
 	}
 	return C, nil
@@ -68,7 +68,7 @@ func SinglyLinkedList_intersect(A, B *SinglyLinkedList) (*SinglyLinkedList, erro
 		} else if a > b {
 			B.RemoveFirst()
 		} else {
-			C.AddLast(a)
+			C.AddLast(a, a)
 			A.RemoveFirst()
 			B.RemoveFirst()
 		}
@@ -97,7 +97,7 @@ func SinglyLinkedList_subtract(A, B *SinglyLinkedList) (*SinglyLinkedList, error
 			return nil, err
 		}
 		if a < b {
-			C.AddLast(a)
+			C.AddLast(a, a)
 			A.RemoveFirst()
 		} else if a > b {
 			B.RemoveFirst()
@@ -112,7 +112,7 @@ func SinglyLinkedList_subtract(A, B *SinglyLinkedList) (*SinglyLinkedList, error
 			utils.HandleErr(err)
 			return nil, err
 		}
-		C.AddLast(a)
+		C.AddLast(a, a)
 		A.RemoveFirst()
 	}
 	for !B.IsEmpty() {
