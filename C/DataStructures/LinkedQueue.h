@@ -24,12 +24,14 @@ int LinkedQueue_isEmpty(LinkedQueue* Q) {
     return Q->front == NULL;
 }
 
-void LinkedQueue_enqueue(LinkedQueue* Q, int e) {
+void LinkedQueue_enqueue(LinkedQueue* Q, void* node) { // int k, int e
     SinglyLinkedNode* p = SinglyLinkedNode_getnode();
     if (p == NULL) {
         return;
     }
-    p->element = e;
+    // p->key = k;
+    // p->element = e;
+    p->element = node;
     p->link = NULL;
     if (LinkedQueue_isEmpty(Q)) {
         Q->front = p;
@@ -40,11 +42,12 @@ void LinkedQueue_enqueue(LinkedQueue* Q, int e) {
     }
 }
 
-int LinkedQueue_dequeue(LinkedQueue* Q) {
+void* LinkedQueue_dequeue(LinkedQueue* Q) {
     if (LinkedQueue_isEmpty(Q)) {
         return emptyQueueException();
     }
-    int e = (Q->front)->element;
+    // int e = (Q->front)->element;
+    void* e = (Q->front)->element;
     SinglyLinkedNode* p = Q->front;
     Q->front = (Q->front)->link;
     if (Q->front == NULL) {

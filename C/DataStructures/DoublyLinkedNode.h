@@ -5,6 +5,7 @@
 #include "../utils/utils.h"
 
 typedef struct DoublyLinkedNode {
+    int key;
     int element;
     struct DoublyLinkedNode* nextlink;
     struct DoublyLinkedNode* previouslink;
@@ -16,6 +17,7 @@ DoublyLinkedNode* DoublyLinkedNode_getnode() {
         notEnoughMemory();
         return NULL;
     }
+    newnode->key = 0;
     newnode->element = 0;
     newnode->nextlink = NULL;
     newnode->previouslink = NULL;

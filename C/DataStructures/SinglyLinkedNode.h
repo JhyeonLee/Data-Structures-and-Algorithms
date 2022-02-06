@@ -3,9 +3,10 @@
 // #define __SINGLYLINKEDNODE_H__
 #include<stdlib.h>
 #include "../utils/utils.h"
+#include "./Node.h"
 
 typedef struct SinglyLinkedNode {
-    int element;
+    void* element;
     struct SinglyLinkedNode* link;
 } SinglyLinkedNode;
 
@@ -15,7 +16,7 @@ SinglyLinkedNode* SinglyLinkedNode_getnode() {
         notEnoughMemory();
         return NULL;
     }
-    newnode->element = 0;
+    newnode->element = NULL;
     newnode->link = NULL;
     return newnode;
 }

@@ -3,7 +3,9 @@
 // #define __LINKEDBINARYTREE_H__
 #include<stdlib.h>
 #include "../utils/utils.h"
+#include "./SinglyLinkedList.h"
 #include "./LinkedBinaryTreeNode.h"
+#include "./LinkedQueue.h"
 
 typedef struct LinkedBinaryTree {
     LinkedBinaryTreeNode* root;
@@ -51,7 +53,7 @@ LinkedBinaryTreeNode* LinkedBinaryTree_sibling(LinkedBinaryTreeNode* node) {
     }
 }
 int LinkedBinaryTree_isInternal(LinkedBinaryTreeNode* node) {
-    return node->leftChild != NULL || node->rightChild != NULL;
+    return node->leftChild != NULL && node->rightChild != NULL;
 }
 int LinkedBinaryTree_isExternal(LinkedBinaryTreeNode* node) {
     return node->leftChild == NULL && node->rightChild == NULL;
@@ -90,39 +92,64 @@ int LinkedBinaryTree_height(LinkedBinaryTreeNode* node) {
         }        
     }
 }
-void LinkedBinaryTree_binaryPreOrder(LinkedBinaryTreeNode* node) {
+int LinkedBinaryTree_binaryPreOrder(LinkedBinaryTreeNode* node) {
+    int count = 0;
     printf("key: %d, element: %d\n", node->key, node->element);
     if(LinkedBinaryTree_isInternal(node)) {
-        LinkedBinaryTree_binaryPreOrder(node->leftChild);
-        LinkedBinaryTree_binaryPreOrder(node->rightChild);
+        count += LinkedBinaryTree_binaryPreOrder(node->leftChild);
+        count += LinkedBinaryTree_binaryPreOrder(node->rightChild);
     }
+    return count;
 }
-void LinkedBinaryTree_binaryPostOrder(LinkedBinaryTreeNode* node) {
+int LinkedBinaryTree_binaryPostOrder(LinkedBinaryTreeNode* node) {
+    int count = 0;
     if(LinkedBinaryTree_isInternal(node)) {
-        LinkedBinaryTree_binaryPostOrder(node->leftChild);
-        LinkedBinaryTree_binaryPostOrder(node->rightChild);
+        count += LinkedBinaryTree_binaryPostOrder(node->leftChild);
+        count += LinkedBinaryTree_binaryPostOrder(node->rightChild);
     }
     printf("key: %d, element: %d\n", node->key, node->element);
+    return count;
 }
-void LinkedBinaryTree_binaryInOrder(LinkedBinaryTreeNode* node) {
+int LinkedBinaryTree_binaryInOrder(LinkedBinaryTreeNode* node) {
+    int count = 0;
     if(LinkedBinaryTree_isInternal(node)) {
-        LinkedBinaryTree_binaryInOrder(node->leftChild);
+        count += LinkedBinaryTree_binaryInOrder(node->leftChild);
     }
     printf("key: %d, element: %d\n", node->key, node->element);
     if(LinkedBinaryTree_isInternal(node)) {
-        LinkedBinaryTree_binaryInOrder(node->rightChild);
+        count += LinkedBinaryTree_binaryInOrder(node->rightChild);
+    }
+    return count;
+}
+void LinkedBinaryTree_levelOrder(LinkedBinaryTreeNode* node) {
+    LinkedQueue* Q = LinkedQueue_initialize();
+    if (Q == NULL) {
+        return;
+    }
+    LinkedQueue_enqueue(Q, node);
+    while(!LinkedQueue_isEmpty(Q)) {
+        node = LinkedQueue_dequeue(Q);
+        // visit(v);
+        if (LinkedBinaryTree_isInternal(node->leftChild)) {
+            LinkedQueue_enqueue(Q, node->leftChild);
+        }
+        if (LinkedBinaryTree_isInternal(node->rightChild)) {
+            LinkedQueue_enqueue(Q, node->rightChild);
+        }
     }
 }
-void LinkedBinaryTree_eulerTour(LinkedBinaryTreeNode* node) {
+float LinkedBinaryTree_eulerTour(LinkedBinaryTreeNode* node) {
+    float count = 0;
     printf("key: %d, element: %d\n", node->leftChild->key, node->leftChild->element);
     if(LinkedBinaryTree_isInternal(node)) {
-        LinkedBinaryTree_eulerTour(node->leftChild);
+        count += LinkedBinaryTree_eulerTour(node->leftChild);
     }
     printf("key: %d, element: %d\n", node->key, node->element);
     if(LinkedBinaryTree_isInternal(node)) {
-        LinkedBinaryTree_eulerTour(node->rightChild);
+        count += LinkedBinaryTree_eulerTour(node->rightChild);
     }
     printf("key: %d, element: %d\n", node->rightChild->key, node->rightChild->element);
+    return count;
 }
 
 LinkedBinaryTreeNode* LinkedBinaryTree_preOrderSucc(LinkedBinaryTreeNode* node) {
@@ -173,6 +200,36 @@ LinkedBinaryTreeNode* LinkedBinaryTree_postOrderSucc(LinkedBinaryTreeNode* node)
         node = node->leftChild;
     }
     return node;
+}
+
+LinkedBinaryTree* ListConvert2CompleteBinaryTree(SinglyLinkedList* list, int type) {
+    LinkedBinaryTree* tree = LinkedBinaryTree_initialize(type);
+    if (tree == NULL) {
+        return NULL;
+    }
+    
+    LinkedQueue* Q = LinkedQueue_initialize();
+    if (Q == NULL) {
+        return;
+    }
+    LinkedBinaryTreeNode* node = tree->root;
+    LinkedQueue_enqueue(Q, node);
+    while(!SinglyLinkedList_isEmpty(list)) {
+        node = LinkedQueue_dequeue(Q);
+        // visit(v);
+        node->leftChild = SinglyLinkedList_removeFirst(list);
+        if(node->leftChild == NULL) {
+            break;
+        }
+        LinkedQueue_enqueue(Q, node->leftChild);
+        node->rightChild = SinglyLinkedList_removeFirst(list);
+        if(node->rightChild == NULL) {
+            break;
+        }
+        LinkedQueue_enqueue(Q, node->rightChild);
+    }
+
+    return tree;
 }
 
 // #endif

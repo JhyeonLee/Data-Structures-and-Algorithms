@@ -79,8 +79,9 @@ void DoublyLinkedList_traverse(DoublyLinkedList* list){
 }
 
 // 노드 p 앞에 값이 e인 노드 삽입
-void DoublyLinkedList_addNodeBefore(DoublyLinkedNode* p, int e){
+void DoublyLinkedList_addNodeBefore(DoublyLinkedNode* p, int k, int e){
     DoublyLinkedNode* q = DoublyLinkedNode_getnode();
+    q->key = k;
     q->element = e;
     q->previouslink = p->previouslink;
     q->nextlink = p;
@@ -89,7 +90,7 @@ void DoublyLinkedList_addNodeBefore(DoublyLinkedNode* p, int e){
 }
 
 // 순위 r에 원소가 e인 노드 삽입
-void DoublyLinkedList_add(DoublyLinkedList* list, int r, int e) {
+void DoublyLinkedList_add(DoublyLinkedList* list, int r, int k, int e) {
     if (r < 1 || DoublyLinkedList_size(list)+1 < r) {
         invalidRankException();
         return;
@@ -98,18 +99,18 @@ void DoublyLinkedList_add(DoublyLinkedList* list, int r, int e) {
     for(int i = 0; i<r; i++){
         p = p->nextlink;
     }
-    DoublyLinkedList_addNodeBefore(p, e);
+    DoublyLinkedList_addNodeBefore(p, k, e);
     // size += 1;
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삽입
-void DoublyLinkedList_addFirst(DoublyLinkedList* list, int e) {
-    DoublyLinkedList_add(list, 1, e);
+void DoublyLinkedList_addFirst(DoublyLinkedList* list, int k, int e) {
+    DoublyLinkedList_add(list, 1, k, e);
 }
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
-void DoublyLinkedList_addLast(DoublyLinkedList* list, int e) {
-    DoublyLinkedList_add(list, DoublyLinkedList_size(list)+1, e);
+void DoublyLinkedList_addLast(DoublyLinkedList* list, int k, int e) {
+    DoublyLinkedList_add(list, DoublyLinkedList_size(list)+1, k, e);
 }
 
 // 노드 p 삭제
