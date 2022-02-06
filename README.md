@@ -8,7 +8,7 @@ languages: C, Cpp, Python, Golang
 3. Set
 4. Stack
 5. Queue and Deque
-6. Tree
+6. Tree - Binary Tree
 
 ## Algorithms
 ### 1. Sort
