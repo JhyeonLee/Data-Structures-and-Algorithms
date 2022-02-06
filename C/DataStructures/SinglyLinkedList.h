@@ -45,9 +45,10 @@ int SinglyLinkedList_isEmpty(SinglyLinkedList* list) {
 }
 
 // 순위 r에 저장된 원소를 반환
-int SinglyLinkedList_get(SinglyLinkedList* list, int r) {
+void* SinglyLinkedList_get(SinglyLinkedList* list, int r) {
     if ( r < 1 || SinglyLinkedList_size(list) < r) {
-        return invalidRankException();
+        invalidRankException();
+        return NULL;
     }
     SinglyLinkedNode* p = list->header;
     for(int i = 0; i <r; i++){
@@ -70,10 +71,11 @@ int SinglyLinkedList_set(SinglyLinkedList* list, int r, int k, int e) {
     Node* node = getnode();
     node->key = k;
     node->element = e;
-    Node* q = p->element;
+    void* q = p->element;
     p->element = node;
-    int e = q->element;
-    Node_putnode(q);
+    // int e = q->element; // q가 Node라면
+    // Node_putnode(q); // q가 Node라면
+    free(q);
     return e;
 }
 
@@ -135,7 +137,8 @@ void* SinglyLinkedList_removeNode(SinglyLinkedNode* previousNode) {
 // 순위 r에 저장된 원소를 삭제하여 반환
 void* SinglyLinkedList_remove(SinglyLinkedList* list, int r) {
     if (r < 1 || SinglyLinkedList_size(list) < r) {
-        return invalidRankException();
+        invalidRankException();
+        return NULL;
     }
     SinglyLinkedNode* p = list->header;
     for(int i = 0; i<r-1; i++){
