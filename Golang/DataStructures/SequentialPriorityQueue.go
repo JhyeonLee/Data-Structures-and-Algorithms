@@ -18,64 +18,64 @@ func Initialize_SequentialPriorityQueue() *SequentialPriorityQueue {
 	return pq
 }
 
-// 리스트의 크기, 즉 원소 수 반환
-func (l *SequentialPriorityQueue) Size() int {
-	return len(l.keys)
-}
-
 // 리스트가 비어 있는지 여부를 반환
-func (l *SequentialPriorityQueue) IsEmpty() bool {
-	return l.Size() == 0
+func (pq *SequentialPriorityQueue) IsEmpty() bool {
+	return pq.Size() == 0
 }
 
-func (l *SequentialPriorityQueue) Swap(A, B int) {
-	k := l.keys[A]
-	l.keys[A] = l.keys[B]
-	l.keys[B] = k
+// 리스트의 크기, 즉 원소 수 반환
+func (pq *SequentialPriorityQueue) Size() int {
+	return len(pq.keys)
 }
 
-func (l *SequentialPriorityQueue) InsertItem(k, e int) {
+func (pq *SequentialPriorityQueue) Swap(A, B int) {
+	k := pq.keys[A]
+	pq.keys[A] = pq.keys[B]
+	pq.keys[B] = k
+}
+
+func (pq *SequentialPriorityQueue) InsertItem(k, e int) {
 	// fullQueueException()
 
-	l.rear++
-	l.keys[l.rear] = k
-	l.elements[k] = e
+	pq.rear++
+	pq.keys[pq.rear] = k
+	pq.elements[k] = e
 }
 
-func (l *SequentialPriorityQueue) MinKey() (int, error) {
-	if l.IsEmpty() {
+func (pq *SequentialPriorityQueue) MinKey() (int, error) {
+	if pq.IsEmpty() {
 		return -1, utils.EmptyQueueException()
 	}
-	min := l.keys[0]
-	for key, value := range l.elements {
-		if l.elements[min] > value {
+	min := pq.keys[0]
+	for key, value := range pq.elements {
+		if pq.elements[min] > value {
 			min = key
 		}
 	}
 	return min, nil
 }
 
-func (l *SequentialPriorityQueue) RemoveMin() (int, error) {
-	if l.IsEmpty() {
+func (pq *SequentialPriorityQueue) RemoveMin() (int, error) {
+	if pq.IsEmpty() {
 		return -1, utils.EmptyQueueException()
 	}
-	min, err := l.MinKey()
+	min, err := pq.MinKey()
 	if err != nil {
 		return -1, err
 	}
-	e := l.elements[min]
-	l.Swap(min, l.keys[0])
-	l.rear--
+	e := pq.elements[min]
+	pq.Swap(min, pq.keys[0])
+	pq.rear--
 	return e, nil
 }
 
-func (l *SequentialPriorityQueue) MinElement() (int, error) {
-	if l.IsEmpty() {
+func (pq *SequentialPriorityQueue) MinElement() (int, error) {
+	if pq.IsEmpty() {
 		return -1, utils.EmptyQueueException()
 	}
-	min, err := l.MinKey()
+	min, err := pq.MinKey()
 	if err != nil {
 		return -1, err
 	}
-	return l.elements[min], nil
+	return pq.elements[min], nil
 }

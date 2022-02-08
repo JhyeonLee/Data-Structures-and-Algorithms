@@ -20,7 +20,7 @@ func Initialize_SinglyLinkedList() *SinglyLinkedList {
 		Header:   GetSinglyLinkedNode(),
 		Trailer:  GetSinglyLinkedNode(),
 	}
-	list.Header.link = list.Trailer
+	list.Header.Link = list.Trailer
 	return list
 }
 
@@ -31,7 +31,7 @@ func (l *SinglyLinkedList) Size() int {
 		return count
 	}
 
-	for p := l.HeadNode; p != l.Trailer; p = p.link {
+	for p := l.HeadNode; p != l.Trailer; p = p.Link {
 		count += 1
 	}
 	return count
@@ -49,7 +49,7 @@ func (l *SinglyLinkedList) Get(r int) (int, error) {
 	}
 	p := l.Header
 	for i := 0; i < r; i++ {
-		p = p.link
+		p = p.Link
 	}
 	return p.Element, nil
 }
@@ -61,7 +61,7 @@ func (l *SinglyLinkedList) Set(r, k, e int) (int, error) {
 	}
 	p := l.Header
 	for i := 0; i < r; i++ {
-		p = p.link
+		p = p.Link
 	}
 	p.Key = k
 	p.Element = e
@@ -70,7 +70,7 @@ func (l *SinglyLinkedList) Set(r, k, e int) (int, error) {
 
 // 원소 전체 순회
 func (l *SinglyLinkedList) Traverse() {
-	for p := l.HeadNode; p != l.Trailer; p = p.link {
+	for p := l.HeadNode; p != l.Trailer; p = p.Link {
 		fmt.Printf(" %d", p.Element)
 	}
 	fmt.Printf("\n")
@@ -81,8 +81,8 @@ func (p *SinglyLinkedNode) AddNodeNext(k, e int) {
 	q := GetSinglyLinkedNode()
 	q.Key = k
 	q.Element = e
-	q.link = p.link
-	p.link = q
+	q.Link = p.Link
+	p.Link = q
 }
 
 // 순위 r에 원소가 e인 노드 삽입
@@ -92,7 +92,7 @@ func (l *SinglyLinkedList) Add(r, k, e int) error {
 	}
 	p := l.Header
 	for i := 0; i < r-1; i++ {
-		p = p.link
+		p = p.Link
 	}
 	p.AddNodeNext(k, e)
 	return nil
@@ -109,34 +109,42 @@ func (l *SinglyLinkedList) AddLast(k, e int) error {
 }
 
 // 노드 p 삭제
-func (previousNode *SinglyLinkedNode) RemoveNode() int {
-	p := previousNode.link
-	e := p.Element
-	previousNode.link = p.link
-	p = nil
-	return e
+func (previousNode *SinglyLinkedNode) RemoveNode() *SinglyLinkedNode {
+	p := previousNode.Link
+	// e := p.Element
+	previousNode.Link = p.Link
+	// p = nil
+	// return e
+
+	// apply node which has key and element
+	p.Link = nil
+	return p
 }
 
 // 순위 r에 저장된 원소를 삭제하여 반환
-func (l *SinglyLinkedList) Remove(r int) (int, error) {
+// apply node which has key and element
+func (l *SinglyLinkedList) Remove(r int) (*SinglyLinkedNode, error) {
 	if r < 0 || l.Size() < r {
-		return -1, utils.InvalidRankException()
+		// return -1, utils.InvalidRankException()
+		return nil, utils.InvalidRankException()
 	}
 	p := l.Header
 	for i := 0; i < r-1; i++ {
-		p = p.link
+		p = p.Link
 	}
 	e := p.RemoveNode()
 	return e, nil
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삭제
-func (l *SinglyLinkedList) RemoveFirst() (int, error) {
+// apply node which has key and element
+func (l *SinglyLinkedList) RemoveFirst() (*SinglyLinkedNode, error) {
 	return l.Remove(1)
 }
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삭제
-func (l *SinglyLinkedList) RemoveLast() (int, error) {
+// apply node which has key and element
+func (l *SinglyLinkedList) RemoveLast() (*SinglyLinkedNode, error) {
 	return l.Remove(l.Size())
 }
 

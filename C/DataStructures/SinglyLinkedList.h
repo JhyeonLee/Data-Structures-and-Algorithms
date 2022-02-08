@@ -44,6 +44,16 @@ int SinglyLinkedList_isEmpty(SinglyLinkedList* list) {
     return SinglyLinkedList_size(list) == 0;
 }
 
+void SinglyLinkedList_swap(SinglyLinkedNode* A, SinglyLinkedNode* B) {
+    int k = A->key;
+    A->key = B->key;
+    B->key = k;
+
+    int e = A->element;
+    A->element = B->element;
+    B->element = e;
+}
+
 // 순위 r에 저장된 원소를 반환
 int SinglyLinkedList_get(SinglyLinkedList* list, int r) {
     if ( r < 1 || SinglyLinkedList_size(list) < r) {
@@ -80,15 +90,16 @@ void SinglyLinkedList_traverse(SinglyLinkedList* list) {
 }
 
 // 노드 p 뒤에 값이 e인 노드 삽입
-void SinglyLinkedList_addNodeNext(SinglyLinkedNode* p, int e) {
+void SinglyLinkedList_addNodeNext(SinglyLinkedNode* p, int k, int e) {
     SinglyLinkedNode* q = SinglyLinkedNode_getnode();
+    q->key = k;
     q->element = e;
     q->link = p->link;
     p->link = q;
 }
 
 // 순위 r에 원소가 e인 노드 삽입
-void SinglyLinkedList_add(SinglyLinkedList* list, int r, int e) {
+void SinglyLinkedList_add(SinglyLinkedList* list, int r, int k, int e) {
     if (r < 1 || SinglyLinkedList_size(list)+1 < r) {
         invalidRankException();
         return;
@@ -97,54 +108,69 @@ void SinglyLinkedList_add(SinglyLinkedList* list, int r, int e) {
     for(int i = 0; i<r-1; i++){
         p = p->link;
     }
-    SinglyLinkedList_addNodeNext(p, e);
+    SinglyLinkedList_addNodeNext(p, k, e);
     // size += 1;
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삽입
-void SinglyLinkedList_addFirst(SinglyLinkedList* list, int e) {
-    SinglyLinkedList_add(list, 1, e);
+void SinglyLinkedList_addFirst(SinglyLinkedList* list, int k, int e) {
+    SinglyLinkedList_add(list, 1, k, e);
 }
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
-void SinglyLinkedList_addLast(SinglyLinkedList* list, int e) {
-    SinglyLinkedList_add(list, SinglyLinkedList_size(list)+1, e);
+void SinglyLinkedList_addLast(SinglyLinkedList* list, int k, int e) {
+    SinglyLinkedList_add(list, SinglyLinkedList_size(list)+1, k, e);
 }
 
 // 노드 p 삭제
-int SinglyLinkedList_removeNode(SinglyLinkedNode* previousNode) {
+SinglyLinkedNode* SinglyLinkedList_removeNode(SinglyLinkedNode* previousNode) {
     SinglyLinkedNode* p = previousNode->link;
     if (p == NULL) {
-        return -1;
+        // return -1;
+        return NULL;
     }
-    int e = p->element;
+    // int e = p->element;
     previousNode->link = p->link;
-    SinglyLinkedNode_putnode(p);
-    return e;
+    // SinglyLinkedNode_putnode(p);
+    // return e;
+
+    // apply node which has key and element
+    p->link = NULL;
+    return p;
 }
 
 // 순위 r에 저장된 원소를 삭제하여 반환
-int SinglyLinkedList_remove(SinglyLinkedList* list, int r) {
+SinglyLinkedNode* SinglyLinkedList_remove(SinglyLinkedList* list, int r) {
     if (r < 1 || SinglyLinkedList_size(list) < r) {
         invalidRankException();
-        return -1;
+        // return -1;
+        return NULL;
     }
     SinglyLinkedNode* p = list->header;
     for(int i = 0; i<r-1; i++){
         p = p->link;
     }
-    int e = SinglyLinkedList_removeNode(p);
+    // int e = SinglyLinkedList_removeNode(p);
     // size -= 1;
-    return e;
+    // return e;
+
+    // apply node which has key and element
+    p = SinglyLinkedList_removeNode(p);
+    if (p == NULL) {
+        return;
+    }
+    return p;
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삭제
-int SinglyLinkedList_removeFirst(SinglyLinkedList* list) {
+// apply node which has key and element
+SinglyLinkedNode* SinglyLinkedList_removeFirst(SinglyLinkedList* list) {
     return SinglyLinkedList_remove(list, 1);
 }
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삭제
-int SinglyLinkedList_removeLast(SinglyLinkedList* list) {
+// apply node which has key and element
+SinglyLinkedNode* SinglyLinkedList_removeLast(SinglyLinkedList* list) {
     return SinglyLinkedList_remove(list, SinglyLinkedList_size(list));
 }
 

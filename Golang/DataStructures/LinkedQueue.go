@@ -30,12 +30,12 @@ func (Q *LinkedQueue) IsEmpty() bool {
 func (Q *LinkedQueue) Enqueue(e int) {
 	p := GetSinglyLinkedNode()
 	p.Element = e
-	p.link = nil
+	p.Link = nil
 	if Q.IsEmpty() {
 		Q.front = p
 		Q.rear = p
 	} else {
-		(Q.rear).link = p
+		(Q.rear).Link = p
 		Q.rear = p
 	}
 }
@@ -45,7 +45,7 @@ func (Q *LinkedQueue) Dequeue() (int, error) {
 		return -1, utils.EmptyQueueException()
 	}
 	e := Q.front.Element
-	Q.front = Q.front.link
+	Q.front = Q.front.Link
 	if Q.front == nil {
 		Q.rear = nil
 	}

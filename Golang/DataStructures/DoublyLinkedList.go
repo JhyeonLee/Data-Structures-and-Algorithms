@@ -20,8 +20,8 @@ func Initialize_DoublyLinkedList() *DoublyLinkedList {
 		Header:   GetDoublyLinkedNode(),
 		Trailer:  GetDoublyLinkedNode(),
 	}
-	(list.Header).nextlink = list.Trailer
-	(list.Trailer).previouslink = list.Header
+	(list.Header).NextLink = list.Trailer
+	(list.Trailer).PreviousLink = list.Header
 	return list
 }
 
@@ -32,7 +32,7 @@ func (l *DoublyLinkedList) Size() int {
 		return count
 	}
 
-	for p := l.HeadNode; p != l.Trailer; p = p.nextlink {
+	for p := l.HeadNode; p != l.Trailer; p = p.NextLink {
 		count += 1
 	}
 	return count
@@ -50,7 +50,7 @@ func (l *DoublyLinkedList) Get(r int) (int, error) {
 	}
 	p := l.Header
 	for i := 0; i < r; i++ {
-		p = p.nextlink
+		p = p.NextLink
 	}
 	return p.Element, nil
 }
@@ -62,7 +62,7 @@ func (l *DoublyLinkedList) Set(r, e int) (int, error) {
 	}
 	p := l.Header
 	for i := 0; i < r; i++ {
-		p = p.nextlink
+		p = p.NextLink
 	}
 	p.Element = e
 	return e, nil
@@ -70,74 +70,78 @@ func (l *DoublyLinkedList) Set(r, e int) (int, error) {
 
 // 원소 전체 순회
 func (l *DoublyLinkedList) Traverse() {
-	for p := l.HeadNode; p != l.Trailer; p = p.nextlink {
+	for p := l.HeadNode; p != l.Trailer; p = p.NextLink {
 		fmt.Printf(" %d", p.Element)
 	}
 	fmt.Printf("\n")
 }
 
 // 노드 p 앞에 값이 e인 노드 삽입
-func (p *DoublyLinkedNode) AddNodeBefore(e int) {
+func (p *DoublyLinkedNode) AddNodeBefore(k, e int) {
 	q := GetDoublyLinkedNode()
+	q.Key = k
 	q.Element = e
-	q.previouslink = p.previouslink
-	q.nextlink = p
-	(p.previouslink).nextlink = q
-	p.previouslink = q
+	q.PreviousLink = p.PreviousLink
+	q.NextLink = p
+	(p.PreviousLink).NextLink = q
+	p.PreviousLink = q
 }
 
 // 순위 r에 원소가 e인 노드 삽입
-func (l *DoublyLinkedList) Add(r, e int) error {
+func (l *DoublyLinkedList) Add(r, k, e int) error {
 	if r < 0 || l.Size() < r {
 		return utils.InvalidRankException()
 	}
 	p := l.Header
 	for i := 0; i < r; i++ {
-		p = p.nextlink
+		p = p.NextLink
 	}
-	p.AddNodeBefore(e)
+	p.AddNodeBefore(k, e)
 	return nil
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삽입
-func (l *DoublyLinkedList) AddFirst(e int) error {
-	return l.Add(1, e)
+func (l *DoublyLinkedList) AddFirst(k, e int) error {
+	return l.Add(1, k, e)
 }
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
-func (l *DoublyLinkedList) AddLast(e int) error {
-	return l.Add(l.Size()+1, e)
+func (l *DoublyLinkedList) AddLast(k, e int) error {
+	return l.Add(l.Size()+1, k, e)
 }
 
 // 노드 p 삭제
-func (p *DoublyLinkedNode) RemoveNode() int {
-	e := p.Element
-	(p.previouslink).nextlink = p.nextlink
-	(p.nextlink).previouslink = p.previouslink
-	p = nil
+func (p *DoublyLinkedNode) RemoveNode() *DoublyLinkedNode {
+	// e := p.Element
+	e := p
+	(p.PreviousLink).NextLink = p.NextLink
+	(p.NextLink).PreviousLink = p.PreviousLink
+	// p = nil
+	e.NextLink = nil
+	e.PreviousLink = nil
 	return e
 }
 
 // 순위 r에 저장된 원소를 삭제하여 반환
-func (l *DoublyLinkedList) Remove(r int) (int, error) {
+func (l *DoublyLinkedList) Remove(r int) (*DoublyLinkedNode, error) {
 	if r < 0 || l.Size() < r {
-		return -1, utils.InvalidRankException()
+		return nil, utils.InvalidRankException()
 	}
 	p := l.Header
 	for i := 0; i < r-1; i++ {
-		p = p.nextlink
+		p = p.NextLink
 	}
 	e := p.RemoveNode()
 	return e, nil
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삭제
-func (l *DoublyLinkedList) RemoveFirst() (int, error) {
+func (l *DoublyLinkedList) RemoveFirst() (*DoublyLinkedNode, error) {
 	return l.Remove(1)
 }
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삭제
-func (l *DoublyLinkedList) RemoveLast() (int, error) {
+func (l *DoublyLinkedList) RemoveLast() (*DoublyLinkedNode, error) {
 	return l.Remove(l.Size())
 }
 

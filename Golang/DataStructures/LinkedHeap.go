@@ -111,7 +111,7 @@ func (node *LinkedBinaryTreeNode) UpHeap_minHeap() {
 	if node.Key <= (node.Parent).Key {
 		return
 	}
-	Swap(node, node.Parent)
+	Swap_LinkedBinaryTreeNode(node, node.Parent)
 	node.UpHeap_minHeap()
 }
 func (node *LinkedBinaryTreeNode) DownHeap_minHeap() {
@@ -127,7 +127,7 @@ func (node *LinkedBinaryTreeNode) DownHeap_minHeap() {
 	if node.Key <= smaller.Key {
 		return
 	}
-	Swap(node, smaller)
+	Swap_LinkedBinaryTreeNode(node, smaller)
 	smaller.DownHeap_minHeap()
 }
 func (H *LinkedHeap) InsertItem_minHeap(k, e int) {
@@ -161,7 +161,7 @@ func (node *LinkedBinaryTreeNode) UpHeap_maxHeap() {
 	if node.Key >= (node.Parent).Key {
 		return
 	}
-	Swap(node, node.Parent)
+	Swap_LinkedBinaryTreeNode(node, node.Parent)
 	node.UpHeap_maxHeap()
 }
 func (node *LinkedBinaryTreeNode) DownHeap_maxHeap() {
@@ -177,7 +177,7 @@ func (node *LinkedBinaryTreeNode) DownHeap_maxHeap() {
 	if node.Key >= bigger.Key {
 		return
 	}
-	Swap(node, bigger)
+	Swap_LinkedBinaryTreeNode(node, bigger)
 	bigger.DownHeap_maxHeap()
 }
 func (H *LinkedHeap) InsertItem_maxHeap(k, e int) {

@@ -19,54 +19,58 @@ func (Dq *LinkedDeque) IsEmpty() bool {
 	return Dq.front == nil
 }
 
-func (Dq *LinkedDeque) Push(e int) {
+func (Dq *LinkedDeque) Push(k, e int) {
 	p := GetDoublyLinkedNode()
+	p.Key = k
 	p.Element = e
-	p.nextlink = nil
-	p.previouslink = nil
+	p.NextLink = nil
+	p.PreviousLink = nil
 	if Dq.IsEmpty() {
 		Dq.front = p
 		Dq.rear = p
 	} else {
-		p.nextlink = Dq.front
-		(Dq.front).previouslink = p
+		p.NextLink = Dq.front
+		(Dq.front).PreviousLink = p
 		Dq.front = p
 	}
 }
 
-func (Dq *LinkedDeque) Pop() (int, error) {
+func (Dq *LinkedDeque) Pop() (*DoublyLinkedNode, error) {
 	if Dq.IsEmpty() {
-		return -1, utils.EmptyDequeException()
+		return nil, utils.EmptyDequeException()
 	}
-	e := Dq.front.Element
-	Dq.front = Dq.front.nextlink
+	// e := Dq.front.Element
+	e := Dq.front
+	Dq.front = Dq.front.NextLink
 	if Dq.front == nil {
 		Dq.rear = nil
 	}
 	return e, nil
 }
 
-func (Dq *LinkedDeque) Inject(e int) {
+func (Dq *LinkedDeque) Inject(k, e int) {
 	p := GetDoublyLinkedNode()
+	p.Key = k
 	p.Element = e
-	p.nextlink = nil
-	p.previouslink = nil
+	p.NextLink = nil
+	p.PreviousLink = nil
 	if Dq.IsEmpty() {
 		Dq.front = p
 		Dq.rear = p
 	} else {
-		p.previouslink = Dq.rear
-		(Dq.rear).nextlink = p
+		p.PreviousLink = Dq.rear
+		(Dq.rear).NextLink = p
 		Dq.rear = p
 	}
 }
 
-func (Dq *LinkedDeque) Eject() (int, error) {
+func (Dq *LinkedDeque) Eject() (*DoublyLinkedNode, error) {
 	if Dq.IsEmpty() {
-		return -1, utils.EmptyDequeException()
+		return nil, utils.EmptyDequeException()
 	}
-	e := Dq.rear.Element
-	Dq.rear = Dq.rear.previouslink
+	// e := Dq.rear.Element
+	e := Dq.rear
+	Dq.rear = Dq.rear.PreviousLink
 	if Dq.rear == nil {
 		Dq.front = nil
 	}

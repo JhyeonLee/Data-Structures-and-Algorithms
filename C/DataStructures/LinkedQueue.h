@@ -23,6 +23,7 @@ LinkedQueue* LinkedQueue_initialize() {
     }
     queue->front = NULL;
     queue->rear = NULL;
+    return queue;
 }
 
 int LinkedQueue_isEmpty(LinkedQueue* Q) {

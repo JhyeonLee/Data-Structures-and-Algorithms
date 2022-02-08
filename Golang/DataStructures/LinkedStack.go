@@ -20,7 +20,7 @@ func (S *LinkeStack) IsEmpty() bool {
 func (S *LinkeStack) Push(e int) {
 	p := GetSinglyLinkedNode()
 	p.Element = e
-	p.link = S.Top
+	p.Link = S.Top
 	S.Top = p
 }
 
@@ -30,7 +30,7 @@ func (S *LinkeStack) Put() (int, error) {
 	}
 	e := S.Top.Element
 	// p := S.Top
-	S.Top = S.Top.link
+	S.Top = S.Top.Link
 	// p = nil
 	return e, nil
 }

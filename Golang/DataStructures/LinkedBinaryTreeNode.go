@@ -19,6 +19,15 @@ func GetLinkedBinaryTreeNode() *LinkedBinaryTreeNode {
 	return newnode
 }
 
+func Swap_LinkedBinaryTreeNode(v *LinkedBinaryTreeNode, w *LinkedBinaryTreeNode) {
+	k := v.Key
+	v.Key = w.Key
+	w.Key = k
+	e := v.Element
+	v.Element = w.Element
+	w.Element = e
+}
+
 // func PutLinkedBinaryTreeNode(node *LinkedBinaryTreeNode) {
 // 	del
 // }

@@ -40,14 +40,6 @@ func (node *LinkedBinaryTreeNode) SetElement(k, e int) {
 	node.Key = k
 	node.Element = e
 }
-func Swap(v *LinkedBinaryTreeNode, w *LinkedBinaryTreeNode) {
-	k := v.Key
-	v.Key = w.Key
-	w.Key = k
-	e := v.Element
-	v.Element = w.Element
-	w.Element = e
-}
 
 func (node *LinkedBinaryTreeNode) Depth() int {
 	if IsRoot(node) {
@@ -184,7 +176,8 @@ func (list *SinglyLinkedList) ListConvert2CompleteBinaryTree(typeOfOrder string)
 			break
 		}
 		newnode := GetLinkedBinaryTreeNode()
-		newnode.Element = e
+		newnode.Element = e.Element
+		newnode.Key = e.Key
 		node.LeftChild = newnode
 		newnode.Parent = node
 		Q.Enqueue_biT(node.LeftChild)
@@ -194,7 +187,8 @@ func (list *SinglyLinkedList) ListConvert2CompleteBinaryTree(typeOfOrder string)
 			break
 		}
 		newnode = GetLinkedBinaryTreeNode()
-		newnode.Element = e
+		newnode.Element = e.Element
+		newnode.Key = e.Key
 		node.RightChild = newnode
 		newnode.Parent = node
 		Q.Enqueue_biT(node.RightChild)

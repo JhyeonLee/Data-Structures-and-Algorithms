@@ -6,6 +6,7 @@
 #include "./LinkedBinaryTreeNode.h"
 
 typedef struct SinglyLinkedNode {
+    int key;
     int element;
     struct SinglyLinkedNode* link;
 } SinglyLinkedNode;
@@ -21,7 +22,8 @@ SinglyLinkedNode* SinglyLinkedNode_getnode() {
         notEnoughMemory();
         return NULL;
     }
-    newnode->element = NULL;
+    newnode->key = 0;
+    newnode->element = 0;
     newnode->link = NULL;
     return newnode;
 }

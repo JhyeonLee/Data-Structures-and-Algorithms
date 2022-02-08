@@ -126,7 +126,7 @@ func SinglyLinkedList_member(A *SinglyLinkedList, e int) bool {
 	if A.IsEmpty() {
 		return false
 	}
-	for p := A.HeadNode; p != A.Trailer; p = p.link {
+	for p := A.HeadNode; p != A.Trailer; p = p.Link {
 		if p.Element == e {
 			return true
 		}
@@ -139,9 +139,9 @@ func SinglyLinkedList_subset(A, B *SinglyLinkedList) bool {
 	if A.IsEmpty() {
 		return false
 	}
-	for p := A.HeadNode; p != A.Trailer; p = p.link {
+	for p := A.HeadNode; p != A.Trailer; p = p.Link {
 		if SinglyLinkedList_member(B, p.Element) {
-			if p.link == A.Trailer {
+			if p.Link == A.Trailer {
 				return true
 			}
 		} else {

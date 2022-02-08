@@ -45,6 +45,16 @@ int DoublyLinkedList_isEmpty(DoublyLinkedList* list) {
     return DoublyLinkedList_size(list) == 0;
 }
 
+void DoublyLinkedList_swap(DoublyLinkedNode* A, DoublyLinkedNode* B) {
+    int k = A->key;
+    A->key = B->key;
+    B->key = k;
+
+    int e = A->element;
+    A->element = B->element;
+    B->element = e;
+}
+
 // 순위 r에 저장된 원소를 반환
 int DoublyLinkedList_get(DoublyLinkedList* list, int r){
     if ( r < 1 || DoublyLinkedList_size(list) < r) {
@@ -114,36 +124,41 @@ void DoublyLinkedList_addLast(DoublyLinkedList* list, int k, int e) {
 }
 
 // 노드 p 삭제
-int DoublyLinkedList_removeNode(DoublyLinkedNode* p){
-    int e = p->element;
+DoublyLinkedNode* DoublyLinkedList_removeNode(DoublyLinkedNode* p){
+    // int e = p->element;
     (p->previouslink)->nextlink = p->nextlink;
     (p->nextlink)->previouslink = p->previouslink;
-    DoublyLinkedNode_putnode(p);
-    return e;
+    // DoublyLinkedNode_putnode(p);
+    // return e;
+    p->previouslink = NULL;
+    p->nextlink = NULL;
+    return p;
 }
 
 // 순위 r에 저장된 원소를 삭제하여 반환
-int DoublyLinkedList_remove(DoublyLinkedList* list, int r){
+DoublyLinkedNode* DoublyLinkedList_remove(DoublyLinkedList* list, int r){
     if (r < 1 || DoublyLinkedList_size(list) < r) {
-        return invalidRankException();
+        invalidRankException();
+        return NULL;
     }
     DoublyLinkedNode* p = list->header;
     for(int i = 0; i<r; i++){
         p = p->nextlink;
     }
-    int e = DoublyLinkedList_removeNode(p);
+    // int e = DoublyLinkedList_removeNode(p);
+    DoublyLinkedNode* e = DoublyLinkedList_removeNode(p);
     // size -= 1;
     return e;
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삭제
-void DoublyLinkedList_removeFirst(DoublyLinkedList* list) {
-    DoublyLinkedList_remove(list, 1);
+DoublyLinkedNode* DoublyLinkedList_removeFirst(DoublyLinkedList* list) {
+    return DoublyLinkedList_remove(list, 1);
 }
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삭제
-void DoublyLinkedList_removeLast(DoublyLinkedList* list) {
-    DoublyLinkedList_remove(list, DoublyLinkedList_size(list));
+DoublyLinkedNode* DoublyLinkedList_removeLast(DoublyLinkedList* list) {
+    return DoublyLinkedList_remove(list, DoublyLinkedList_size(list));
 }
 
 // 헤더와 트레일러 이외 모든 원소 삭제

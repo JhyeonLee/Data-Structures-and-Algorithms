@@ -17,13 +17,13 @@ func DoublyLinkedList_union(A, B *DoublyLinkedList) (*DoublyLinkedList, error) {
 			return nil, err
 		}
 		if a < b {
-			C.AddLast(a)
+			C.AddLast(a, a)
 			A.RemoveFirst()
 		} else if a > b {
-			C.AddLast(b)
+			C.AddLast(b, b)
 			B.RemoveFirst()
 		} else {
-			C.AddLast(a)
+			C.AddLast(a, a)
 			A.RemoveFirst()
 			B.RemoveFirst()
 		}
@@ -34,7 +34,7 @@ func DoublyLinkedList_union(A, B *DoublyLinkedList) (*DoublyLinkedList, error) {
 			utils.HandleErr(err)
 			return nil, err
 		}
-		C.AddLast(a)
+		C.AddLast(a, a)
 		A.RemoveFirst()
 	}
 	for !B.IsEmpty() {
@@ -43,7 +43,7 @@ func DoublyLinkedList_union(A, B *DoublyLinkedList) (*DoublyLinkedList, error) {
 			utils.HandleErr(err)
 			return nil, err
 		}
-		C.AddLast(b)
+		C.AddLast(b, b)
 		B.RemoveFirst()
 	}
 	return C, nil
@@ -68,7 +68,7 @@ func DoublyLinkedList_intersect(A, B *DoublyLinkedList) (*DoublyLinkedList, erro
 		} else if a > b {
 			B.RemoveFirst()
 		} else {
-			C.AddLast(a)
+			C.AddLast(a, a)
 			A.RemoveFirst()
 			B.RemoveFirst()
 		}
@@ -97,7 +97,7 @@ func DoublyLinkedList_subtract(A, B *DoublyLinkedList) (*DoublyLinkedList, error
 			return nil, err
 		}
 		if a < b {
-			C.AddLast(a)
+			C.AddLast(a, a)
 			A.RemoveFirst()
 		} else if a > b {
 			B.RemoveFirst()
@@ -112,7 +112,7 @@ func DoublyLinkedList_subtract(A, B *DoublyLinkedList) (*DoublyLinkedList, error
 			utils.HandleErr(err)
 			return nil, err
 		}
-		C.AddLast(a)
+		C.AddLast(a, a)
 		A.RemoveFirst()
 	}
 	for !B.IsEmpty() {
@@ -126,7 +126,7 @@ func DoublyLinkedList_member(A *DoublyLinkedList, e int) bool {
 	if A.IsEmpty() {
 		return false
 	}
-	for p := A.HeadNode; p != A.Trailer; p = p.nextlink {
+	for p := A.HeadNode; p != A.Trailer; p = p.NextLink {
 		if p.Element == e {
 			return true
 		}
@@ -139,9 +139,9 @@ func DoublyLinkedList_subset(A, B *DoublyLinkedList) bool {
 	if A.IsEmpty() {
 		return false
 	}
-	for p := A.HeadNode; p != A.Trailer; p = p.nextlink {
+	for p := A.HeadNode; p != A.Trailer; p = p.NextLink {
 		if DoublyLinkedList_member(B, p.Element) {
-			if p.nextlink == A.Trailer {
+			if p.NextLink == A.Trailer {
 				return true
 			}
 		} else {

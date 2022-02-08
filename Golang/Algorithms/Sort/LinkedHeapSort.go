@@ -36,7 +36,7 @@ func InplaceLinkedHeapSort_Insertion(orderType string) *DataStructures.LinkedHea
 	if orderType == "Ascending" {
 		lastnode := heap.LastNode()
 		for i := heap.N; i >= 2; i-- {
-			DataStructures.Swap(heap.Root, lastnode)
+			DataStructures.Swap_LinkedBinaryTreeNode(heap.Root, lastnode)
 			(heap.Root).DownHeap_minHeap()
 			lastnode = DataStructures.RetreatLastNode(heap, lastnode)
 		}
@@ -44,7 +44,7 @@ func InplaceLinkedHeapSort_Insertion(orderType string) *DataStructures.LinkedHea
 	} else if orderType == "Descending" {
 		lastnode := heap.LastNode()
 		for i := heap.N; i >= 2; i-- {
-			DataStructures.Swap(heap.Root, lastnode)
+			DataStructures.Swap_LinkedBinaryTreeNode(heap.Root, lastnode)
 			(heap.Root).DownHeap_maxHeap()
 			lastnode = DataStructures.RetreatLastNode(heap, lastnode)
 		}
@@ -84,7 +84,7 @@ func InplaceLinkedHeapSort_BottomUp_Recursive(orderType string) *DataStructures.
 	if orderType == "Ascending" {
 		lastnode := heap.LastNode()
 		for i := heap.N; i >= 2; i-- {
-			DataStructures.Swap(heap.Root, lastnode)
+			DataStructures.Swap_LinkedBinaryTreeNode(heap.Root, lastnode)
 			(heap.Root).DownHeap_minHeap()
 			lastnode = DataStructures.RetreatLastNode(heap, lastnode)
 		}
@@ -92,7 +92,7 @@ func InplaceLinkedHeapSort_BottomUp_Recursive(orderType string) *DataStructures.
 	} else if orderType == "Descending" {
 		lastnode := heap.LastNode()
 		for i := heap.N; i >= 2; i-- {
-			DataStructures.Swap(heap.Root, lastnode)
+			DataStructures.Swap_LinkedBinaryTreeNode(heap.Root, lastnode)
 			(heap.Root).DownHeap_maxHeap()
 			lastnode = DataStructures.RetreatLastNode(heap, lastnode)
 		}

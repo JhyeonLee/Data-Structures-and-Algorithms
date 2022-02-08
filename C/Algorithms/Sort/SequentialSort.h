@@ -1,15 +1,17 @@
 #pragma once
-// #ifdef __SORT_H__
-// #define __SORT_H__
+// #ifdef __SEQUENTIALSORT_H__
+// #define __SEQUENTIALSORT_H__
 #include <stdio.h>
 #include <stdlib.h>
 #include "../utils/utils.h"
-#include "../DataStructures/ArrayList.h"
 #include "../DataStructures/SequentialPriorityQueue.h"
 
 // 우선순위 큐를 이용한 정렬
 void Sequential_PQ_Sort(ArrayList* list) {
     SequentialPriorityQueue* Pq = SequentialPriorityQueue_initialize(ArrayList_size(list));
+    if (Pq == NULL) {
+        return;
+    }
     while (!ArrayList_isEmpty(list)) {
         int e = ArrayList_removeFirst(list);
         SequentialPriorityQueue_insertItem(Pq, e, e);
@@ -21,7 +23,7 @@ void Sequential_PQ_Sort(ArrayList* list) {
 }
 
 // 제자리 선택 정렬
-void inPlaceSelectionSort(ArrayList* list) {
+void Sequential_inPlaceSelectionSort(ArrayList* list) {
     for(int pass = 0 ; pass <= ArrayList_size(list) - 2; pass++) {
         int min = pass;
         for(int j = pass +1; pass <= ArrayList_size(list) - 1; j++) {
@@ -34,7 +36,7 @@ void inPlaceSelectionSort(ArrayList* list) {
 }
 
 // 제자리 삽입 정렬
-void inPlaceInsertionSort(ArrayList* list) {
+void Sequential_inPlaceInsertionSort(ArrayList* list) {
     for (int pass = 1; pass <= ArrayList_size(list) - 1; pass++) {
         int save = list->elements[pass];
         int j = pass - 1;
