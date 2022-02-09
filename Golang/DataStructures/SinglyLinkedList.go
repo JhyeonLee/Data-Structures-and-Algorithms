@@ -11,6 +11,7 @@ type SinglyLinkedList struct {
 	TailNode *SinglyLinkedNode
 	Header   *SinglyLinkedNode
 	Trailer  *SinglyLinkedNode
+	Size     int
 }
 
 func Initialize_SinglyLinkedList() *SinglyLinkedList {
@@ -21,48 +22,52 @@ func Initialize_SinglyLinkedList() *SinglyLinkedList {
 		Trailer:  GetSinglyLinkedNode(),
 	}
 	list.Header.Link = list.Trailer
+	list.Size = 0
 	return list
 }
 
 // 리스트의 크기, 즉 원소 수 반환
-func (l *SinglyLinkedList) Size() int {
-	count := 0
-	if l.HeadNode == nil {
-		return count
-	}
+// func (l *SinglyLinkedList) Size() int {
+// 	count := 0
+// 	if l.HeadNode == nil {
+// 		return count
+// 	}
 
-	for p := l.HeadNode; p != l.Trailer; p = p.Link {
-		count += 1
-	}
-	return count
-}
+// 	for p := l.HeadNode; p != l.Trailer; p = p.Link {
+// 		count += 1
+// 	}
+// 	return count
+// }
 
 // 리스트가 비어 있는지 여부를 반환
 func (l *SinglyLinkedList) IsEmpty() bool {
-	return l.Size() == 0
+	return l.Size == 0 // l.Size() == 0
 }
 
-// 순위 r에 저장된 원소를 반환
-func (l *SinglyLinkedList) Get(r int) (int, error) {
-	if r < 0 || l.Size() < r {
-		return -1, utils.InvalidRankException()
-	}
+// 순위 r에 있는 노드 반환
+func (l *SinglyLinkedList) FindNode(r int) *SinglyLinkedNode {
 	p := l.Header
 	for i := 0; i < r; i++ {
 		p = p.Link
 	}
+	return p
+}
+
+// 순위 r에 저장된 원소를 반환
+func (l *SinglyLinkedList) Get(r int) (int, error) {
+	if r < 0 || l.Size < r {
+		return -1, utils.InvalidRankException()
+	}
+	p := l.FindNode(r)
 	return p.Element, nil
 }
 
 // 순위 r에 저장된 원소를 e로 대체
 func (l *SinglyLinkedList) Set(r, k, e int) (int, error) {
-	if r < 0 || l.Size() < r {
+	if r < 0 || l.Size < r {
 		return -1, utils.InvalidRankException()
 	}
-	p := l.Header
-	for i := 0; i < r; i++ {
-		p = p.Link
-	}
+	p := l.FindNode(r)
 	p.Key = k
 	p.Element = e
 	return e, nil
@@ -87,14 +92,12 @@ func (p *SinglyLinkedNode) AddNodeNext(k, e int) {
 
 // 순위 r에 원소가 e인 노드 삽입
 func (l *SinglyLinkedList) Add(r, k, e int) error {
-	if r < 0 || l.Size()+1 < r {
+	if r < 0 || l.Size+1 < r {
 		return utils.InvalidRankException()
 	}
-	p := l.Header
-	for i := 0; i < r-1; i++ {
-		p = p.Link
-	}
+	p := l.FindNode(r - 1)
 	p.AddNodeNext(k, e)
+	l.Size++
 	return nil
 }
 
@@ -105,7 +108,39 @@ func (l *SinglyLinkedList) AddFirst(k, e int) error {
 
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
 func (l *SinglyLinkedList) AddLast(k, e int) error {
-	return l.Add(l.Size()+1, k, e)
+	return l.Add(l.Size+1, k, e)
+}
+
+func InsertNodeNext(p, q *SinglyLinkedNode) {
+	q.Link = p.Link
+	p.Link = q
+}
+
+func Concatenate_SinglyLinkedList(left, right *SinglyLinkedList) *SinglyLinkedList {
+	(left.TailNode).Link = right.HeadNode
+	left.Trailer = nil
+	left.Trailer = right.Trailer
+	right.Header = nil
+	left.Size += right.Size
+	return left
+}
+
+func (l *SinglyLinkedList) Partition(r int) *SinglyLinkedList {
+	prev := l.FindNode(r)
+	p := prev.Link
+
+	PartitionedList := Initialize_SinglyLinkedList()
+	(PartitionedList.Header).Link = p
+	PartitionedList.HeadNode = p
+	PartitionedList.TailNode = l.TailNode
+	PartitionedList.Trailer = l.Trailer
+
+	prev.Link = l.Trailer
+	l.TailNode = prev
+
+	PartitionedList.Size = l.Size - r
+	l.Size = r
+	return PartitionedList
 }
 
 // 노드 p 삭제
@@ -124,7 +159,7 @@ func (previousNode *SinglyLinkedNode) RemoveNode() *SinglyLinkedNode {
 // 순위 r에 저장된 원소를 삭제하여 반환
 // apply node which has key and element
 func (l *SinglyLinkedList) Remove(r int) (*SinglyLinkedNode, error) {
-	if r < 0 || l.Size() < r {
+	if r < 0 || l.Size < r {
 		// return -1, utils.InvalidRankException()
 		return nil, utils.InvalidRankException()
 	}
@@ -133,6 +168,11 @@ func (l *SinglyLinkedList) Remove(r int) (*SinglyLinkedNode, error) {
 		p = p.Link
 	}
 	e := p.RemoveNode()
+	l.Size--
+	if l.Size == 0 {
+		l.HeadNode = nil
+		l.TailNode = nil
+	}
 	return e, nil
 }
 
@@ -145,7 +185,7 @@ func (l *SinglyLinkedList) RemoveFirst() (*SinglyLinkedNode, error) {
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삭제
 // apply node which has key and element
 func (l *SinglyLinkedList) RemoveLast() (*SinglyLinkedNode, error) {
-	return l.Remove(l.Size())
+	return l.Remove(l.Size)
 }
 
 // 헤더와 트레일러 이외 모든 원소 삭제
@@ -153,7 +193,7 @@ func (l *SinglyLinkedList) RemoveAll() error {
 	if l.IsEmpty() {
 		return utils.EmptyListException()
 	}
-	for i := l.Size(); i > 0; i-- {
+	for i := l.Size; i > 0; i-- {
 		l.RemoveFirst()
 	}
 	return nil

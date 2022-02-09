@@ -5,10 +5,6 @@ import (
 	"github.com/JhyeonLee/DataStructuresAndAlgorithms/golang/utils"
 )
 
-// 구조체 임베딩
-type ArrayList struct {
-	DataStructures.ArrayList
-}
 
 func (list *ArrayList) PQ_Sort() {
 	Pq := DataStructures.Initialize_SequentialPriorityQueue()

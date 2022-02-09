@@ -5,22 +5,6 @@ import (
 	"github.com/JhyeonLee/DataStructuresAndAlgorithms/golang/utils"
 )
 
-type SinglyLinkedNode struct {
-	DataStructures.SinglyLinkedNode
-}
-type SinglyLinkedList struct {
-	DataStructures.SinglyLinkedList
-}
-type DoublyLinkedNode struct {
-	DataStructures.DoublyLinkedNode
-}
-type DoublyLinkedList struct {
-	DataStructures.DoublyLinkedList
-}
-type LinkedPriorityQueue struct {
-	DataStructures.LinkedPriorityQueue
-}
-
 // 우선순위 큐를 이용한 정렬
 func Linked_PQ_Sort(list *SinglyLinkedList) {
 	Pq := DataStructures.LinkedPriorityQueue_initialize()

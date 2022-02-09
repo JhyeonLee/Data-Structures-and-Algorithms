@@ -11,6 +11,7 @@ typedef struct DoublyLinkedList {
     DoublyLinkedNode* tailNode;
     DoublyLinkedNode* header;
     DoublyLinkedNode* trailer;
+    int size;
 } DoublyLinkedList;
 
 DoublyLinkedList* DoublyLinkedList_initialize(){
@@ -23,6 +24,7 @@ DoublyLinkedList* DoublyLinkedList_initialize(){
     newlist->tailNode = NULL;
     newlist->header = DoublyLinkedNode_getnode();
     newlist->trailer = DoublyLinkedNode_getnode();
+    newlist->size = 0;
     (newlist->header)->nextlink = newlist->trailer;
     (newlist->trailer)->previouslink = newlist->header;
     return newlist;
@@ -55,15 +57,21 @@ void DoublyLinkedList_swap(DoublyLinkedNode* A, DoublyLinkedNode* B) {
     B->element = e;
 }
 
+// 순위 r에 있는 노드 반환
+DoublyLinkedNode* DoublyLinkedList_findNode(DoublyLinkedList* list, int r) {
+    DoublyLinkedNode* p = list->header;
+    for(int i = 0; i <r; i++){
+        p = p->nextlink;
+    }
+    return p;
+}
+
 // 순위 r에 저장된 원소를 반환
 int DoublyLinkedList_get(DoublyLinkedList* list, int r){
     if ( r < 1 || DoublyLinkedList_size(list) < r) {
         return invalidRankException();
     }
-    DoublyLinkedNode* p = list->header;
-    for(int i = 0; i <r; i++){
-        p = p->nextlink;
-    }
+    DoublyLinkedNode* p = DoublyLinkedList_findNode(list, r);
     return p->element;
 }
 
@@ -72,10 +80,7 @@ int DoublyLinkedList_set(DoublyLinkedList* list, int r, int e){
     if (r < 1 || DoublyLinkedList_size(list) < r) {
         return invalidRankException();
     }
-    DoublyLinkedNode* p = list->header;
-    for(int i = 0; i<r; i++){
-        p = p->nextlink;
-    }
+    DoublyLinkedNode* p = DoublyLinkedList_findNode(list, r);
     p->element = e;
     return e;
 }
@@ -105,12 +110,9 @@ void DoublyLinkedList_add(DoublyLinkedList* list, int r, int k, int e) {
         invalidRankException();
         return;
     }
-    DoublyLinkedNode* p = list->header;
-    for(int i = 0; i<r; i++){
-        p = p->nextlink;
-    }
+    DoublyLinkedNode* p = DoublyLinkedList_findNode(list, r);
     DoublyLinkedList_addNodeBefore(p, k, e);
-    // size += 1;
+    list->size++;
 }
 
 // 리스트 가장 앞에(헤드 노드) 원소가 e인 노드 삽입
@@ -121,6 +123,51 @@ void DoublyLinkedList_addFirst(DoublyLinkedList* list, int k, int e) {
 // 리스트 가장 끝에(테일 노드) 원소가 e인 노드 삽입
 void DoublyLinkedList_addLast(DoublyLinkedList* list, int k, int e) {
     DoublyLinkedList_add(list, DoublyLinkedList_size(list)+1, k, e);
+}
+
+void DoublyLinkedList_insertNodeBefore(DoublyLinkedNode* p, DoublyLinkedNode* q) {
+    q->previouslink = p->previouslink;
+    q->nextlink = p;
+    (p->previouslink)->nextlink = q;
+    p->previouslink = q;
+}
+void DoublyLinkedList_insertNodeAfter(DoublyLinkedNode* p, DoublyLinkedNode* q) {
+    q->nextlink = p->nextlink;
+    q->previouslink = p;
+    (p->nextlink)->previouslink = q;
+    p->nextlink = q;
+}
+
+DoublyLinkedList* DoublyLinkedList_concatenate(DoublyLinkedList* left, DoublyLinkedList* right) {
+    (left->tailNode)->nextlink = right->headNode;
+    (right->headNode)->previouslink = left->tailNode;
+    DoublyLinkedNode_putnode(left->trailer);
+    left->trailer = right->trailer;
+    DoublyLinkedNode_putnode(right->header);
+    left->size += right->size;
+    return left;
+}
+
+DoublyLinkedList* DoublyLinkedList_Partition(DoublyLinkedList* list, int r) {
+    DoublyLinkedNode* prev = DoublyLinkedList_findNode(list, r-1);
+    DoublyLinkedNode* p = prev->nextlink;
+
+    DoublyLinkedList* DoublyPartitionedList = DoublyLinkedList_initialize();
+    (DoublyPartitionedList->header)->nextlink = p;    
+    DoublyPartitionedList->headNode = p;
+    p->previouslink = DoublyPartitionedList->header;
+    DoublyPartitionedList->tailNode = list->tailNode;
+    DoublyLinkedNode_putnode(DoublyPartitionedList->trailer);
+    DoublyPartitionedList->trailer = list->trailer;
+
+    list->trailer = DoublyLinkedNode_getnode();
+    (list->trailer)->previouslink = prev;
+    prev->nextlink = list->trailer;
+    list->tailNode = prev;
+
+    DoublyPartitionedList->size = list->size - r;
+    list->size = r;
+    return DoublyPartitionedList;
 }
 
 // 노드 p 삭제
@@ -148,6 +195,11 @@ DoublyLinkedNode* DoublyLinkedList_remove(DoublyLinkedList* list, int r){
     // int e = DoublyLinkedList_removeNode(p);
     DoublyLinkedNode* e = DoublyLinkedList_removeNode(p);
     // size -= 1;
+    list->size--;
+    if (list->size == 0) {
+        list->headNode = NULL;
+        list->tailNode = NULL;
+    }
     return e;
 }
 

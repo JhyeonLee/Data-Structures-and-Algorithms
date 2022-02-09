@@ -6,10 +6,6 @@ import (
 	"github.com/JhyeonLee/DataStructuresAndAlgorithms/golang/DataStructures"
 )
 
-type LinkedHeap struct {
-	DataStructures.LinkedHeap
-}
-
 func InplaceLinkedHeapSort_Insertion(orderType string) *DataStructures.LinkedHeap {
 	N := 0
 	heap := DataStructures.Initialize_LinkedHeap(orderType)

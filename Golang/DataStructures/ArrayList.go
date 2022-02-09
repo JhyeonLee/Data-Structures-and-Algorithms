@@ -5,16 +5,16 @@ import "github.com/JhyeonLee/DataStructuresAndAlgorithms/golang/utils"
 
 type ArrayList struct {
 	Elements []int
-	front    int
-	last     int
+	Front    int
+	Last     int
 }
 
 // var fullListException = errors.New("full List Exception")
 
 func Initialize_ArrayList() *ArrayList {
 	list := &ArrayList{
-		front: 0,
-		last:  -1,
+		Front: 0,
+		Last:  -1,
 	}
 	return list
 }
@@ -56,7 +56,7 @@ func (l *ArrayList) Add(r, e int) error {
 	if r < 0 || l.Size() < r {
 		return utils.InvalidRankException()
 	}
-	l.last++
+	l.Last++
 	l.Elements = append(append(l.Elements[:r], e), l.Elements[r:]...)
 	return nil
 }
@@ -75,7 +75,7 @@ func (l *ArrayList) Remove(r int) (int, error) {
 		return -1, utils.InvalidRankException()
 	}
 	e := l.Elements[r]
-	l.last--
+	l.Last--
 	l.Elements = append(l.Elements[:r], l.Elements[r+1:]...)
 	return e, nil
 }

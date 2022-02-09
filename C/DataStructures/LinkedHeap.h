@@ -10,7 +10,7 @@
 
 typedef struct LinkedHeap {
     LinkedBinaryTreeNode* root;
-    int n; // 노드 개수
+    int size; // 노드 개수
     int type; // ascending(1), descending(2)
 } LinkedHeap;
 
@@ -25,7 +25,7 @@ LinkedHeap* LinkedHeap_initialize(int type) {
         notEnoughMemory();
         return NULL;
     }
-    newheap->n = 0;
+    newheap->size = 0;
     newheap->type = type;
     return newheap;
 }
@@ -115,8 +115,8 @@ void LinkedHeap_binaryExpansion(SequentialStack* S, int n) {
 }
 LinkedBinaryTreeNode* LinkedHeap_findLastNode(LinkedHeap* H) {
     LinkedBinaryTreeNode* node = H->root;
-    SequentialStack* S = SequentialStack_initialize(H->n);
-    LinkedHeap_binaryExpansion(S, H->n);
+    SequentialStack* S = SequentialStack_initialize(H->size);
+    LinkedHeap_binaryExpansion(S, H->size);
     SequentialStack_pop(S);
     while(!SequentialStack_isEmpty(S)) {
         int bit = SequentialStack_pop(S);
@@ -213,7 +213,7 @@ void LinkedHeap_insertItem_minHeap(LinkedHeap* H, int k, int e) {
     LinkedBinaryTreeNode* newnode = LinkedHeap_advanceLast(H);
     newnode->key = k;
     newnode->element = e;
-    H->n++;
+    H->size++;
     LinkedHeap_expandExternal(newnode);
     LinkedHeap_upHeap_minHeap(newnode);
 }
@@ -225,7 +225,7 @@ LinkedBinaryTreeNode* LinkedHeap_removeMin_minHeap(LinkedHeap* H) {
     LinkedBinaryTreeNode* node = LinkedHeap_retreatLast(H);
     LinkedBinaryTreeNode* z = lastNode->rightChild;
     reduceExternal(H, z);
-    H->n--;
+    H->size--;
     LinkedHeap_downHeap_minHeap(H->root);
 
     root->leftChild = NULL;
@@ -263,7 +263,7 @@ void LinkedHeap_insertItem_maxHeap(LinkedHeap* H, int k, int e) {
     LinkedBinaryTreeNode* newnode = LinkedHeap_advanceLast(H);
     newnode->key = k;
     newnode->element = e;
-    H->n++;
+    H->size++;
     LinkedHeap_expandExternal(newnode);
     LinkedHeap_upHeap_maxHeap(newnode);
 }
@@ -275,7 +275,7 @@ LinkedBinaryTreeNode* LinkedHeap_removeMax_maxHeap(LinkedHeap* H) {
     LinkedBinaryTreeNode* node = LinkedHeap_retreatLast(H);
     LinkedBinaryTreeNode* z = lastNode->rightChild;
     reduceExternal(H, z);
-    H->n--;
+    H->size--;
     LinkedHeap_downHeap_maxHeap(H->root);
 
     root->leftChild = NULL;
@@ -320,7 +320,7 @@ LinkedHeap* CompleteBinaryTreeConvert2LinkedHeap(LinkedBinaryTree* tree) {
         return NULL;
     }
     heap->root = tree->root;
-    heap->n = LinkedBinaryTree_binaryPreOrder(tree->root);
+    heap->size = LinkedBinaryTree_binaryPreOrder(tree->root);
     LinkedHeap_expandExternalAll(heap->root);
     return heap;
 }
@@ -335,7 +335,7 @@ LinkedHeap* ListConvert2LinkedHeap(SinglyLinkedList* list, int type) {
         return NULL;
     }
     heap->root = tree->root;
-    heap->n = LinkedBinaryTree_binaryPreOrder(tree->root);
+    heap->size = LinkedBinaryTree_binaryPreOrder(tree->root);
     LinkedHeap_expandExternalAll(heap->root);
     return heap;
 }

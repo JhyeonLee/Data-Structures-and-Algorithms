@@ -6,10 +6,6 @@ import (
 	"github.com/JhyeonLee/DataStructuresAndAlgorithms/golang/DataStructures"
 )
 
-type SequentialHeap struct {
-	DataStructures.SequentialHeap
-}
-
 // order Type: Ascending(min Heap), Descending(max Heap)
 func InplaceSequentialHeapSort_Insertion(orderType string) *DataStructures.SequentialHeap {
 	var N int
