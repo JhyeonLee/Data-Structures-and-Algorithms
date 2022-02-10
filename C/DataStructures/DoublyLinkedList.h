@@ -152,22 +152,22 @@ DoublyLinkedList* DoublyLinkedList_Partition(DoublyLinkedList* list, int r) {
     DoublyLinkedNode* prev = DoublyLinkedList_findNode(list, r-1);
     DoublyLinkedNode* p = prev->nextlink;
 
-    DoublyLinkedList* DoublyPartitionedList = DoublyLinkedList_initialize();
-    (DoublyPartitionedList->header)->nextlink = p;    
-    DoublyPartitionedList->headNode = p;
-    p->previouslink = DoublyPartitionedList->header;
-    DoublyPartitionedList->tailNode = list->tailNode;
-    DoublyLinkedNode_putnode(DoublyPartitionedList->trailer);
-    DoublyPartitionedList->trailer = list->trailer;
+    DoublyLinkedList* PartitionedList = DoublyLinkedList_initialize();
+    (PartitionedList->header)->nextlink = p;    
+    PartitionedList->headNode = p;
+    p->previouslink = PartitionedList->header;
+    PartitionedList->tailNode = list->tailNode;
+    DoublyLinkedNode_putnode(PartitionedList->trailer);
+    PartitionedList->trailer = list->trailer;
 
     list->trailer = DoublyLinkedNode_getnode();
     (list->trailer)->previouslink = prev;
     prev->nextlink = list->trailer;
     list->tailNode = prev;
 
-    DoublyPartitionedList->size = list->size - r;
+    PartitionedList->size = list->size - r;
     list->size = r;
-    return DoublyPartitionedList;
+    return PartitionedList;
 }
 
 // 노드 p 삭제

@@ -142,18 +142,18 @@ SinglyLinkedList* SinglyLinkedList_Partition(SinglyLinkedList* list, int r) {
     SinglyLinkedNode* prev = SinglyLinkedList_findNode(list, r-1);
     SinglyLinkedNode* p = prev->link;
 
-    SinglyLinkedList* SinglyPartitionedList = SinglyLinkedList_initialize();
-    (SinglyPartitionedList->header)->link = p;
-    SinglyPartitionedList->headNode = p;
-    SinglyPartitionedList->tailNode = list->tailNode;
-    SinglyPartitionedList->trailer = list->trailer;
+    SinglyLinkedList* PartitionedList = SinglyLinkedList_initialize();
+    (PartitionedList->header)->link = p;
+    PartitionedList->headNode = p;
+    PartitionedList->tailNode = list->tailNode;
+    PartitionedList->trailer = list->trailer;
 
     prev->link = list->trailer;
     list->tailNode = prev;
 
-    SinglyPartitionedList->size = list->size - r;
+    PartitionedList->size = list->size - r;
     list->size = r;
-    return SinglyPartitionedList;
+    return PartitionedList;
 }
 
 // 노드 p 삭제

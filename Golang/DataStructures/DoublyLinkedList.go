@@ -113,6 +113,51 @@ func (l *DoublyLinkedList) AddLast(k, e int) error {
 	return l.Add(l.Size+1, k, e)
 }
 
+func InsertNodeBefore(p, q *DoublyLinkedNode) {
+	q.PreviousLink = p.PreviousLink
+	q.NextLink = p
+	(p.PreviousLink).NextLink = q
+	p.PreviousLink = q
+}
+
+func InsertNodeAfter(p, q *DoublyLinkedNode) {
+	q.NextLink = p.NextLink
+	q.PreviousLink = p
+	(p.NextLink).PreviousLink = q
+	p.NextLink = q
+}
+
+func Concatenate_DoublyLinkedList(left, right *DoublyLinkedList) {
+	(left.TailNode).NextLink = right.HeadNode
+	(right.HeadNode).PreviousLink = left.TailNode
+	left.Trailer = nil
+	left.Trailer = right.Trailer
+	right.Header = nil
+	left.Size += right.Size
+}
+
+func (l *DoublyLinkedList) Partition(r int) *DoublyLinkedList {
+	prev := l.FindNode(r - 1)
+	p := prev.NextLink
+
+	PartitionedList := Initialize_DoublyLinkedList()
+	(PartitionedList.Header).NextLink = p
+	PartitionedList.HeadNode = p
+	p.PreviousLink = PartitionedList.Header
+	PartitionedList.TailNode = l.TailNode
+	PartitionedList.Trailer = nil
+	PartitionedList.Trailer = l.Trailer
+
+	l.Trailer = GetDoublyLinkedNode()
+	(l.Trailer).PreviousLink = prev
+	prev.NextLink = l.Trailer
+	l.TailNode = prev
+
+	PartitionedList.Size = l.Size - r
+	l.Size = r
+	return PartitionedList
+}
+
 // 노드 p 삭제
 func (p *DoublyLinkedNode) RemoveNode() *DoublyLinkedNode {
 	// e := p.Element

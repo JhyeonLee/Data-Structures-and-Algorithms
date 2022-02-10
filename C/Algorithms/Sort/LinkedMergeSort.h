@@ -22,7 +22,7 @@ void SinglyLinkedMerge(SinglyLinkedList* left, SinglyLinkedList* right, int orde
     while( L->link != left->trailer && !SinglyLinkedList_isEmpty(right)) {
         // sort Ascending by key
         if (orderType == 1) {
-            if ((left->headNode)->key > (right->headNode)->key) {
+            if (L == left->header && (left->headNode)->key > (right->headNode)->key) {
                 SinglyLinkedNode* tmp = SinglyLinkedList_removeFirst(right);
                 SinglyLinkedList_insertNodeNext(L, tmp);
             } else if ((L->link)->key > (right->headNode)->key) {
@@ -32,7 +32,7 @@ void SinglyLinkedMerge(SinglyLinkedList* left, SinglyLinkedList* right, int orde
                 L = L->link;
             }
         } else if (orderType == 2) { // sort Descending by key
-            if ((left->headNode)->key < (right->headNode)->key) {
+            if (L == left->header && (left->headNode)->key < (right->headNode)->key) {
                 SinglyLinkedNode* tmp = SinglyLinkedList_removeFirst(right);
                 SinglyLinkedList_insertNodeNext(L, tmp);
             } else if ((L->link)->key < (right->headNode)->key) {
@@ -47,7 +47,7 @@ void SinglyLinkedMerge(SinglyLinkedList* left, SinglyLinkedList* right, int orde
         
         // sort Ascending by element
         // if (orderType == 1) {
-        //     if ((left->headNode)->element > (right->headNode)->element) {
+        //     if (L == left->header && (left->headNode)->element > (right->headNode)->element) {
         //         SinglyLinkedNode* tmp = SinglyLinkedList_removeFirst(right);
         //         SinglyLinkedList_insertNodeNext(L, tmp);
         //     } else if ((L->link)->element > (right->headNode)->element) {
@@ -57,7 +57,7 @@ void SinglyLinkedMerge(SinglyLinkedList* left, SinglyLinkedList* right, int orde
         //         L = L->link;
         //     }
         // } else if (orderType == 2) { // sort Descending by element
-        //     if ((left->headNode)->element < (right->headNode)->element) {
+        //     if (L == left->header && (left->headNode)->element < (right->headNode)->element) {
         //         SinglyLinkedNode* tmp = SinglyLinkedList_removeFirst(right);
         //         SinglyLinkedList_insertNodeNext(L, tmp);
         //     } else if ((L->link)->element < (right->headNode)->element) {
@@ -88,7 +88,7 @@ void DoublyLinkedRMergeSort(DoublyLinkedList* list, int orderType) {
 }
 void DoublyLinkedMerge(DoublyLinkedList* left, DoublyLinkedList* right, int orderType) {
     DoublyLinkedNode* L = left->headNode;
-    while(L != left->tailNode && !DoublyLinkedList_isEmpty(right)) {
+    while(L != left->trailer && !DoublyLinkedList_isEmpty(right)) {
         // sort Ascending by key
         if (orderType == 1) {
             if (L->key > (right->headNode)->key)  {
