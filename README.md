@@ -1,6 +1,6 @@
 # (Working... and not stable)
 # Data Structures and Algorithms
-languages: C, Cpp, Python, Golang
+languages: C, Python, Golang
 
 ## Data Structures
 1. Array List
