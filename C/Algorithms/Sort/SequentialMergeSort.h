@@ -50,6 +50,7 @@ void SequentialMerge(ArrayList* list, int left, int middle, int right, int order
                 j++;
             }
         } else {
+            wrongOrderTypeException();
             return;
         }
     }

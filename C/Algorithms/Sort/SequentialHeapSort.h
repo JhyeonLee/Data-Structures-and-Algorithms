@@ -21,6 +21,7 @@ SequentialHeap* inPlaceSequentialHeapSort_Insertion(int orderType) {
         } else if (orderType == 2) {
             SequentialHeap_insertItem_maxHeap(H, key, element);
         } else {
+            wrongOrderTypeException();
             return;
         }
     }
@@ -29,18 +30,19 @@ SequentialHeap* inPlaceSequentialHeapSort_Insertion(int orderType) {
     if (orderType == 1) {
         for(int i = N; i >= 2; i--) {
             SequentialHeap_swap(H, 1, i);
-            H->n--;
+            H->size--;
             SequentialHeap_downHeap_minHeap(H, 1);
         }
-        H->n = N;
+        H->size = N;
     } else if (orderType == 2) {
         for(int i = N; i >= 2; i--) {
             SequentialHeap_swap(H, 1, i);
-            H->n--;
+            H->size--;
             SequentialHeap_downHeap_maxHeap(H, 1);
         }
-        H->n = N;
+        H->size = N;
     } else {
+        wrongOrderTypeException();
         return;
     }
     return H;
@@ -53,7 +55,7 @@ SequentialHeap* inPlaceSequentialHeapSort_BottomUp_Recursive(int orderType) {
     SequentialHeap* H = SequentialHeap_initialize(N, type);
     // Phase 1: Build Heap
     printf("input keys and elements(key element)");
-    for(int i = 1; i <= H->n; i++) {
+    for(int i = 1; i <= H->size; i++) {
         scanf("%d %d", &(H->keys[i]), &(H->elements[i]));
     }
     if (orderType == 1) {
@@ -61,24 +63,26 @@ SequentialHeap* inPlaceSequentialHeapSort_BottomUp_Recursive(int orderType) {
     } else if (orderType == 2) {
         SequentialHeap_RecursiveBuildHeap_maxHeap(H);
     } else {
+        wrongOrderTypeException();
         return;
     }
     // Phase 2
     if (orderType == 1) {
         for(int i = N; i >= 2; i--) {
             SequentialHeap_swap(H, 1, i);
-            H->n--;
+            H->size--;
             SequentialHeap_downHeap_minHeap(H, 1);
         }
-        H->n = N;
+        H->size = N;
     } else if (orderType == 2) {
         for(int i = N; i >= 2; i--) {
             SequentialHeap_swap(H, 1, i);
-            H->n--;
+            H->size--;
             SequentialHeap_downHeap_maxHeap(H, 1);
         }
-        H->n = N;
+        H->size = N;
     } else {
+        wrongOrderTypeException();
         return;
     }
     return H;
@@ -90,7 +94,7 @@ SequentialHeap* inPlacSequentialeHeapSort_BottomUp_nonRecursive(int orderType) {
     SequentialHeap* H = SequentialHeap_initialize(N, type);
     // Phase 1: Build Heap
     printf("input keys and elements(key element)");
-    for(int i = 1; i <= H->n; i++) {
+    for(int i = 1; i <= H->size; i++) {
         scanf("%d %d", &(H->keys[i]), &(H->elements[i]));
     }
     if (orderType == 1) {
@@ -98,24 +102,26 @@ SequentialHeap* inPlacSequentialeHeapSort_BottomUp_nonRecursive(int orderType) {
     } else if (orderType == 2) {
         SequentialHeap_nonRecursiveBuildHeap_maxHeap(H);
     } else {
+        wrongOrderTypeException();
         return;
     }
     // Phase 2
     if (orderType == 1) {
         for(int i = N; i >= 2; i--) {
             SequentialHeap_swap(H, 1, i);
-            H->n--;
+            H->size--;
             SequentialHeap_downHeap_minHeap(H, 1);
         }
-        H->n = N;
+        H->size = N;
     } else if (orderType == 2) {
         for(int i = N; i >= 2; i--) {
             SequentialHeap_swap(H, 1, i);
-            H->n--;
+            H->size--;
             SequentialHeap_downHeap_maxHeap(H, 1);
         }
-        H->n = N;
+        H->size = N;
     } else {
+        wrongOrderTypeException();
         return;
     }
     return H;

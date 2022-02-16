@@ -61,4 +61,9 @@ int invalidNodeException() {
     printf("invalid Node Exception\n");
     return -1;
 }
+
+int wrongOrderTypeException() {
+    printf("wrong OrderType Exception\n");
+    return -1;
+}
 // #endif

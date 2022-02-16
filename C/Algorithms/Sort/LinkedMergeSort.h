@@ -42,6 +42,7 @@ void SinglyLinkedMerge(SinglyLinkedList* left, SinglyLinkedList* right, int orde
                 L = L->link;
             }
         } else {
+            wrongOrderTypeException();
             return;
         }
         
@@ -67,6 +68,7 @@ void SinglyLinkedMerge(SinglyLinkedList* left, SinglyLinkedList* right, int orde
         //         L = L->link;
         //     }
         // } else {
+        //     wrongOrderTypeException();
         //     return;
         // }
     }
@@ -105,6 +107,7 @@ void DoublyLinkedMerge(DoublyLinkedList* left, DoublyLinkedList* right, int orde
                 L = L->nextlink;
             }
         } else {
+            wrongOrderTypeException();
             return;
         }
         
@@ -124,6 +127,7 @@ void DoublyLinkedMerge(DoublyLinkedList* left, DoublyLinkedList* right, int orde
         //         L = L->nextlink;
         //     }
         // } else {
+        //     wrongOrderTypeException();
         //     return;
         // }
     }

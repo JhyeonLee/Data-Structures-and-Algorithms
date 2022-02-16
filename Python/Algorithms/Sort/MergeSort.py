@@ -1,14 +1,12 @@
 from DataStructures.ArrayLists import ArrayList
 
-list = ArrayList()
-
 class MergeSort(ArrayList):
         def __init__(self):
             super(MergeSort, self).__init__()
 
         # orderType: 오름차순(Ascending), 내림차순(Descending)
         def MergeSort(self, orderType="Ascending"):
-            self.rMergeSort(list.front, list.last, orderType)
+            self.rMergeSort(self.front, self.last, orderType)
 
         def rMergeSort(self, left, right, orderType="Ascending"):
             if left < right :

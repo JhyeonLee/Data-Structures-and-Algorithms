@@ -56,3 +56,7 @@ func IsNotElement() error {
 func InvalidNodeException() error {
 	return errors.New("invalid Node Exception")
 }
+
+func WrongOrderTypeException() error {
+	return errors.New("wrong OrderType Exception")
+}

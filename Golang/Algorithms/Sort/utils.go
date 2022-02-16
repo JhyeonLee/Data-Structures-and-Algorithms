@@ -1,6 +1,14 @@
 package Algorithms
 
-import "github.com/JhyeonLee/DataStructuresAndAlgorithms/golang/DataStructures"
+import (
+	"math/rand"
+
+	"github.com/JhyeonLee/DataStructuresAndAlgorithms/golang/DataStructures"
+)
+
+func FindPivot(left, right int) int {
+	return rand.Intn(right)%(right-left+1) + left
+}
 
 // 구조체 임베딩
 type ArrayList struct {

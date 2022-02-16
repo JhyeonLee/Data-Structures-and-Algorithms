@@ -24,21 +24,22 @@ LinkedHeap* inPlaceLinkedHeapSort_Insertion(int orderType) {
         } else if (orderType == 2) {
             LinkedHeap_insertItem_maxHeap(H, key, element);
         } else {
+            wrongOrderTypeException();
             return NULL;
         }
         N++;
     }
-    H->n = N;
+    H->size = N;
     
     // Phase 2
     if (orderType == 1) {
         LinkedBinaryTreeNode* lastNode = LinkedHeap_findLastNode(H);
-        for(int i = H->n; i >= 2; i--) {
+        for(int i = H->size; i >= 2; i--) {
             LinkedHeap_swap(H->root, lastNode);
             LinkedHeap_downHeap_minHeap(H->root);
             lastNode = LinkedHeap_retreatLastNode(H, lastNode);
         }
-        H->n = N;
+        H->size = N;
     } else if (orderType == 2) {
         LinkedBinaryTreeNode* lastNode = LinkedHeap_findLastNode(H);
         for(int i = N; i >= 2; i--) {
@@ -47,6 +48,7 @@ LinkedHeap* inPlaceLinkedHeapSort_Insertion(int orderType) {
             lastNode = LinkedHeap_retreatLastNode(H, lastNode);
         }
     } else {
+        wrongOrderTypeException();
         return NULL;
     }
     return H;
@@ -77,19 +79,20 @@ LinkedHeap* inPlaceLinkedHeapSort_BottomUp_Recursive(int orderType) {
     } else if (orderType == 2) {
         H = LinkedHeap_RecursiveBuildHeap_maxHeap(list, orderType);
     } else {
+        wrongOrderTypeException();
         return NULL;
     }
-    H->n = N;
+    H->size = N;
 
     // Phase 2
     if (orderType == 1) {
         LinkedBinaryTreeNode* lastNode = LinkedHeap_findLastNode(H);
-        for(int i = H->n; i >= 2; i--) {
+        for(int i = H->size; i >= 2; i--) {
             LinkedHeap_swap(H->root, lastNode);
             LinkedHeap_downHeap_minHeap(H->root);
             lastNode = LinkedHeap_retreatLastNode(H, lastNode);
         }
-        H->n = N;
+        H->size = N;
     } else if (orderType == 2) {
         LinkedBinaryTreeNode* lastNode = LinkedHeap_findLastNode(H);
         for(int i = N; i >= 2; i--) {
@@ -98,6 +101,7 @@ LinkedHeap* inPlaceLinkedHeapSort_BottomUp_Recursive(int orderType) {
             lastNode = LinkedHeap_retreatLastNode(H, lastNode);
         }
     } else {
+        wrongOrderTypeException();
         return NULL;
     }
     return H;

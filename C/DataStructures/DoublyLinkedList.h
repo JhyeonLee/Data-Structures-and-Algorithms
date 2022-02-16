@@ -66,6 +66,19 @@ DoublyLinkedNode* DoublyLinkedList_findNode(DoublyLinkedList* list, int r) {
     return p;
 }
 
+// 노드의 순위 r 반환
+int DoublyLinkedList_findRank(DoublyLinkedList* list, DoublyLinkedNode* node) {
+    DoublyLinkedNode* p = list->header;
+    int r = 0;
+    for( ; p != list->trailer; p = p->nextlink) {
+        r++;
+        if (p == node) {
+            return r;
+        }
+    }
+    return invalidNodeException();
+}
+
 // 순위 r에 저장된 원소를 반환
 int DoublyLinkedList_get(DoublyLinkedList* list, int r){
     if ( r < 1 || DoublyLinkedList_size(list) < r) {

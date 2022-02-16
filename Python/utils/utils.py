@@ -17,3 +17,6 @@ class emptyQueueException(Exception):
 class emptyDequeException(Exception):
     def __init__(self):
         super().__init__("empty Deque Exception")
+class wrongOrderTypeException(Exception):
+    def __init__(self):
+        super().__init__("wrong OrderType Exception")
