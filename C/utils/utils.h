@@ -66,4 +66,9 @@ int wrongOrderTypeException() {
     printf("wrong OrderType Exception\n");
     return -1;
 }
+
+int noSuchKey() {
+    printf("no Such Key");
+    return -1;
+}
 // #endif

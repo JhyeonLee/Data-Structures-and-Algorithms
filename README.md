@@ -28,7 +28,7 @@ languages: C, Python, Golang
 <details>
 <summary>Details</summary>
 
-1. Dictionary & Linear Search
+1. Dictionary, Linear Search, Binary Search
 2. Binary Search Tree
 3. AVL Tree: height-balance property
 4. Hash Table

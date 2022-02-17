@@ -20,3 +20,6 @@ class emptyDequeException(Exception):
 class wrongOrderTypeException(Exception):
     def __init__(self):
         super().__init__("wrong OrderType Exception")
+class noSuchKey(Exception):
+    def __init__(self):
+        super().__init__("no Such Key")

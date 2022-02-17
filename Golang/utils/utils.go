@@ -60,3 +60,7 @@ func InvalidNodeException() error {
 func WrongOrderTypeException() error {
 	return errors.New("wrong OrderType Exception")
 }
+
+func NoSuchKey() error {
+	return errors.New("no Such Key")
+}

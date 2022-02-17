@@ -1,8 +1,6 @@
 from DataStructures.ArrayLists import ArrayList
-from utils import wrongOrderTypeException
+from utils.utils import wrongOrderTypeException
 import random
-
-list = ArrayList()
 
 class QuickSort(ArrayList):
         def __init__(self):
